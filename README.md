@@ -18,7 +18,7 @@ time.
 - 🧩 **Debug windows** for different systems
 - 🪶 **Entity inspectors** (parties, missions, agents, etc.)
 - 🧰 **Custom utility buttons and actions** for faster testing
-- 🔧 **Fixed UI "Show area" view** - Accessed via `ui.set_screen_debug_information_enabled True`
+- 🔧 **Fixed Debug UI's "Show area"** - Accessed via `ui.set_screen_debug_information_enabled True`
 
 ---
 
@@ -34,12 +34,11 @@ time.
 
 - To open the **DevKit Manager Menu**
   - Press **`F1`** (can be changed in settings).
-  - Or, run `devkit.manager` in the in-game console.
+  - Or, run `devkit.manager` in the console.
 - To open specific debug windows, use the following hotkeys:
   - **`F2`** - Mobile Party Debugger
   - **`F3`** - Campaign Events Debugger
 - Use `Shift` + window hotkey to open new instance of the window.
-- Use the available windows and tools to inspect game state and test features.
 
 ---
 
