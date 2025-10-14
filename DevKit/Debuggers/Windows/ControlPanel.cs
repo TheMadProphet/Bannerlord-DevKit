@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using TaleWorlds.Engine;
 using TaleWorlds.Library;
 using TaleWorlds.ModuleManager;
@@ -43,10 +44,10 @@ public class ControlPanel : DebuggerWindow
         Button("Print Modules", PrintMods, "Prints all loaded submodules.");
     }
 
-    private void WindowButton<T>(string label, DebuggerWindow window)
+    private void WindowButton<T>(string label, DebuggerWindow mainWindow)
         where T : DebuggerWindow, new()
     {
-        Button(label, window.Toggle);
+        Button(label, mainWindow.Toggle);
         Imgui.SameLine(0, 5);
         Button(
             $" + ##{label}",
@@ -57,6 +58,25 @@ public class ControlPanel : DebuggerWindow
             },
             $"Open additional \"{label}\""
         );
+
+        var openWindows = DebuggerWindows.GetAllWindows<T>().Where(it => it.IsOpen).ToList();
+        if (openWindows.Count > 1)
+        {
+            Imgui.SameLine(0, 5);
+            Button(
+                $"Close all ({openWindows.Count})",
+                () =>
+                {
+                    foreach (var win in openWindows)
+                    {
+                        if (win != mainWindow)
+                            DebuggerWindows.RemoveWindow(win);
+                        else
+                            win.IsOpen = false;
+                    }
+                }
+            );
+        }
     }
 
     private static void Break()
