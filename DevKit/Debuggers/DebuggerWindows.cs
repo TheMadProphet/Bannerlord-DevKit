@@ -11,11 +11,13 @@ public static class DebuggerWindows
     public static readonly DebuggerWindow WindowManager = new WindowManager();
     public static readonly DebuggerWindow MissionDebugger = new MissionDebugger();
     public static readonly DebuggerWindow CampaignEventsDebugger = new CampaignEventsDebugger();
+    public static readonly DebuggerWindow MobilePartyDebugger = new MobilePartyDebugger();
     private static readonly List<DebuggerWindow> Windows =
     [
         WindowManager,
         MissionDebugger,
-        CampaignEventsDebugger
+        CampaignEventsDebugger,
+        MobilePartyDebugger
     ];
 
     [HarmonyPostfix]

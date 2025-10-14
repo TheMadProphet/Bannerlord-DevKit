@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TaleWorlds.Engine;
 using TaleWorlds.Library;
 
 namespace DevKit.Debuggers.Windows;
@@ -9,7 +10,15 @@ public class WindowManager : DebuggerWindow
 
     protected override void Render()
     {
+        Imgui.Text("Campaign Windows");
+        Imgui.Separator();
         Button("Campaign Events", () => DebuggerWindows.CampaignEventsDebugger.Toggle());
+        Button("Mobile Party Debugger", () => DebuggerWindows.MobilePartyDebugger.Toggle());
+
+        Imgui.NewLine();
+        
+        Imgui.Text("Mission Windows");
+        Imgui.Separator();
         Button("Mission Debugger", () => DebuggerWindows.MissionDebugger.Toggle());
     }
 

@@ -52,6 +52,13 @@ public abstract class DebuggerWindow
         );
     }
 
+    protected static void SmallButton(string label, Action onClick)
+    {
+        var clicked = Imgui.SmallButton(label);
+        if (clicked)
+            onClick();
+    }
+
     protected static void Collapse(string label, Action content)
     {
         var displayItems = Imgui.CollapsingHeader(label);
