@@ -1,7 +1,7 @@
+using DevKit.Hotkeys;
 using HarmonyLib;
 using TaleWorlds.Engine.GauntletUI;
-using TaleWorlds.Library;
-using TaleWorlds.Localization;
+using TaleWorlds.InputSystem;
 using TaleWorlds.MountAndBlade;
 
 namespace DevKit;
@@ -9,6 +9,9 @@ namespace DevKit;
 public class SubModule : MBSubModuleBase
 {
     public static Harmony HarmonyInstance { get; private set; }
+    private static Harmony HarmonyInstance { get; set; }
+
+    private GameKey _openWindowsManagerKey;
 
     protected override void OnSubModuleLoad()
     {
@@ -16,17 +19,9 @@ public class SubModule : MBSubModuleBase
         HarmonyInstance.PatchAll();
         UIConfig.DoNotUseGeneratedPrefabs = true;
 
-        Module.CurrentModule.AddInitialStateOption(
-            new InitialStateOption(
-                "Message",
-                new TextObject("Message"),
-                9990,
-                () =>
-                {
-                    InformationManager.DisplayMessage(new InformationMessage("Hello World!"));
-                },
-                () => (false, null)
-            )
-        );
+        DevKitHotKeyManager.Initialize();
+        _openWindowsManagerKey = HotKeyManager
+            .GetCategory(nameof(DevKitGameKeyContext))
+            .GetGameKey("OpenWindowManager");
     }
 }
