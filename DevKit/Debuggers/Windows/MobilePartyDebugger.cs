@@ -17,20 +17,14 @@ namespace DevKit.Debuggers.Windows;
 
 public class MobilePartyDebugger : DebuggerWindow
 {
-    public override string Name => $"DevKit | Mobile Party Debugger##{_id}";
+    public override string Name => "DevKit | Mobile Party Debugger";
 
-    private readonly int _id;
     private bool _firstTime = true;
     private MobileParty _mobileParty;
 
     private bool _showIdButtons = true;
     private bool _showEncyclopediaButtons = true;
     private bool _autoSelectOnHover = false;
-
-    public MobilePartyDebugger(int? id = null)
-    {
-        _id = id ?? DebuggerWindows.GetAllWindows<DebuggerWindow>().Count();
-    }
 
     protected override void Render()
     {

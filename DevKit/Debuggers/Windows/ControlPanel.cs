@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using TaleWorlds.Engine;
 using TaleWorlds.Library;
@@ -14,14 +15,20 @@ public class ControlPanel : DebuggerWindow
     {
         Imgui.Text("Campaign Windows");
         Imgui.Separator();
-        Button("Campaign Events", () => DebuggerWindows.CampaignEventsDebugger.Toggle());
-        Button("Mobile Party Debugger", () => DebuggerWindows.MobilePartyDebugger.Toggle());
+        WindowButton<CampaignEventsDebugger>(
+            "Campaign Events",
+            DebuggerWindows.CampaignEventsDebugger
+        );
+        WindowButton<MobilePartyDebugger>(
+            "Mobile Party Debugger",
+            DebuggerWindows.MobilePartyDebugger
+        );
 
         Imgui.NewLine();
 
         Imgui.Text("Mission Windows");
         Imgui.Separator();
-        Button("Mission Debugger", () => DebuggerWindows.MissionDebugger.Toggle());
+        WindowButton<MissionDebugger>("Mission Debugger", DebuggerWindows.MissionDebugger);
 
         Imgui.NewLine();
 
@@ -34,6 +41,22 @@ public class ControlPanel : DebuggerWindow
         );
         Imgui.SameLine(0, 10);
         Button("Print Modules", PrintMods, "Prints all loaded submodules.");
+    }
+
+    private void WindowButton<T>(string label, DebuggerWindow window)
+        where T : DebuggerWindow, new()
+    {
+        Button(label, window.Toggle);
+        Imgui.SameLine(0, 5);
+        Button(
+            $" + ##{label}",
+            () =>
+            {
+                var newWindow = new T();
+                DebuggerWindows.AddWindow(newWindow);
+            },
+            $"Open additional \"{label}\""
+        );
     }
 
     private static void Break()

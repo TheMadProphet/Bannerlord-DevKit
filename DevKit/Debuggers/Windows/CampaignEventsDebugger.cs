@@ -33,7 +33,7 @@ public class CampaignEventsDebugger : DebuggerWindow
         {
             _firstTime = false;
             var events = WrapAllEvents();
-            _whitelistWindow = new CampaignEventsWhitelist(events);
+            _whitelistWindow = new CampaignEventsWhitelist(Id, events);
         }
         _whitelistWindow.Tick();
 

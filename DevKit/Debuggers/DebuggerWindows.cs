@@ -8,10 +8,13 @@ namespace DevKit.Debuggers;
 [HarmonyPatch]
 public static class DebuggerWindows
 {
+    private static int _nextId = 1;
+    public static int NextId => _nextId++;
+
     public static readonly DebuggerWindow ControlPanel = new ControlPanel();
     public static readonly DebuggerWindow MissionDebugger = new MissionDebugger();
     public static readonly DebuggerWindow CampaignEventsDebugger = new CampaignEventsDebugger();
-    public static readonly DebuggerWindow MobilePartyDebugger = new MobilePartyDebugger(0);
+    public static readonly DebuggerWindow MobilePartyDebugger = new MobilePartyDebugger();
     private static readonly List<DebuggerWindow> Windows =
     [
         ControlPanel,
@@ -19,6 +22,8 @@ public static class DebuggerWindows
         CampaignEventsDebugger,
         MobilePartyDebugger
     ];
+    private static readonly List<DebuggerWindow> WindowsToAdd = [];
+    private static readonly List<DebuggerWindow> WindowsToRemove = [];
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(ScreenManager), "UpdateLateTickLayers")]
@@ -26,11 +31,26 @@ public static class DebuggerWindows
     {
         foreach (var window in Windows)
             window.Tick();
+
+        if (WindowsToAdd.Count > 0)
+        {
+            Windows.AddRange(WindowsToAdd);
+            WindowsToAdd.Clear();
+        }
+
+        if (WindowsToRemove.Count > 0)
+        {
+            foreach (var window in WindowsToRemove)
+                Windows.Remove(window);
+            WindowsToRemove.Clear();
+        }
     }
 
     public static void AddWindow(DebuggerWindow window, bool open = true)
     {
-        Windows.Add(window);
+        // Defer addition to avoid modifying Windows list during Tick() iteration
+        // (e.g., when called from UI button clicks during window.Tick())
+        WindowsToAdd.Add(window);
 
         if (open)
             window.Toggle();
@@ -38,7 +58,8 @@ public static class DebuggerWindows
 
     public static void RemoveWindow(DebuggerWindow window)
     {
-        Windows.Remove(window);
+        // Defer removal to avoid modifying Windows list during Tick() iteration
+        WindowsToRemove.Add(window);
     }
 
     public static IEnumerable<T> GetAllWindows<T>()

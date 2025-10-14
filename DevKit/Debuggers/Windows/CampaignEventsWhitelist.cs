@@ -11,7 +11,8 @@ public class CampaignEventsWhitelist : DebuggerWindow
     public readonly HashSet<string> Whitelist = [];
     private readonly List<string> _allEvents;
 
-    public CampaignEventsWhitelist(List<string> allEvents)
+    public CampaignEventsWhitelist(int id, List<string> allEvents)
+        : base(id)
     {
         _allEvents = allEvents;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using TaleWorlds.Engine;
 using TaleWorlds.Library;
 
@@ -7,20 +8,29 @@ namespace DevKit.Debuggers;
 public abstract class DebuggerWindow
 {
     public virtual string Name => "Need to override Name";
-    private bool _isOpen;
+    protected readonly int Id;
+    public bool IsOpen;
+
+    protected DebuggerWindow()
+        : this(null) { }
+
+    protected DebuggerWindow(int? id = null)
+    {
+        Id = id ?? DebuggerWindows.NextId;
+    }
 
     public void Toggle()
     {
-        _isOpen = !_isOpen;
+        IsOpen = !IsOpen;
     }
 
     public void Tick()
     {
-        if (!_isOpen)
+        if (!IsOpen)
             return;
 
         Imgui.BeginMainThreadScope();
-        Imgui.Begin(Name, ref _isOpen);
+        Imgui.Begin($"{Name}##{Id}", ref IsOpen);
 
         Render();
 
