@@ -1,3 +1,4 @@
+using DevKit.Debuggers;
 using DevKit.Hotkeys;
 using HarmonyLib;
 using TaleWorlds.Engine.GauntletUI;
@@ -8,7 +9,6 @@ namespace DevKit;
 
 public class SubModule : MBSubModuleBase
 {
-    public static Harmony HarmonyInstance { get; private set; }
     private static Harmony HarmonyInstance { get; set; }
 
     private GameKey _openWindowsManagerKey;
@@ -23,5 +23,13 @@ public class SubModule : MBSubModuleBase
         _openWindowsManagerKey = HotKeyManager
             .GetCategory(nameof(DevKitGameKeyContext))
             .GetGameKey("OpenWindowManager");
+    }
+
+    protected override void OnApplicationTick(float dt)
+    {
+        if (Input.IsKeyPressed(_openWindowsManagerKey.KeyboardKey.InputKey))
+        {
+            DebuggerWindows.WindowManager.Toggle();
+        }
     }
 }

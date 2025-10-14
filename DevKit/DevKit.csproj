@@ -288,9 +288,13 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Debuggers\DebuggerWindow.cs" />
+    <Compile Include="Debuggers\DebuggerWindows.cs" />
+    <Compile Include="Debuggers\Windows\MissionDebugger.cs" />
+    <Compile Include="Debuggers\Windows\WindowManager.cs" />
     <Compile Include="Hotkeys\DevKitGameKeyContext.cs" />
     <Compile Include="Hotkeys\DevKitHotKeyManager.cs" />
-    <Compile Include="Hotkeys\Patch.cs" />
+    <Compile Include="Hotkeys\HotKeyPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs"/>
     <Compile Include="SubModule.cs"/>
   </ItemGroup>
