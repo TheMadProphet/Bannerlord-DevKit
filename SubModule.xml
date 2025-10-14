@@ -1,5 +1,5 @@
 <Module>
-  <Name value="Bannerlord DevKit"/>
+  <Name value="Modding DevKit"/>
   <Id value="DevKit"/>
   <Version value="v0.0.1"/>
   <SingleplayerModule value="true"/>

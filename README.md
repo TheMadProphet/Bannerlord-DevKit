@@ -1,4 +1,4 @@
-﻿# Bannerlord DevKit by Prophet ⚙️
+﻿# Modding DevKit by Prophet ⚙️
 
 *Modding & debug toolkit for Mount & Blade II: Bannerlord*
 
@@ -6,7 +6,7 @@
 
 ## 🧰 Overview
 
-**Bannerlord DevKit** is a **developer toolkit and debugging suite** built to streamline the modding workflow for
+**Modding DevKit** is a **developer toolkit and debugging suite** built to streamline the modding workflow for
 *Mount & Blade II: Bannerlord*.  
 Created by **Prophet**, this mod provides in-game tools for testing, inspecting, and tweaking game systems in real
 time.
@@ -26,7 +26,7 @@ time.
 
 1. Download the latest release from GitHub.
 2. Extract the folder into your Bannerlord installation directory: `Mount & Blade II Bannerlord/Modules/`
-3. Enable **Bannerlord DevKit** in the game launcher before starting the game. (Last in load order)
+3. Enable **Modding DevKit** in the game launcher before starting the game. (Last in load order)
 
 ---
 
@@ -43,8 +43,9 @@ time.
 ---
 
 ## 🧩 For Mod Developers
+TODO: Maybe
 
-You can easily extend **Bannerlord DevKit** with your own tools or debug windows.
+You can easily extend **Modding DevKit** with your own tools or debug windows.
 
 Example:
 
