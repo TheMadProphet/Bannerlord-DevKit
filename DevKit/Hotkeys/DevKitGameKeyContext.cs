@@ -9,8 +9,8 @@ public class DevKitGameKeyContext : GameKeyContext
     {
         RegisterGameKey(
             new GameKey(
-                (int)KeyMap.OpenWindowManager,
-                "OpenWindowManager",
+                (int)KeyMap.OpenControlPanel,
+                "OpenControlPanel",
                 nameof(DevKitGameKeyContext),
                 InputKey.F1,
                 nameof(DevKitGameKeyContext)
@@ -47,7 +47,7 @@ public class DevKitGameKeyContext : GameKeyContext
 
     public enum KeyMap
     {
-        OpenWindowManager = 140,
+        OpenControlPanel = 140,
         OpenMobilePartyDebugger = 141,
         OpenCampaignEventsDebugger = 142,
         OpenMissionDebugger = 143,

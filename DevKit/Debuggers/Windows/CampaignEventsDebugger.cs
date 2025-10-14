@@ -10,7 +10,7 @@ namespace DevKit.Debuggers.Windows;
 
 public class CampaignEventsDebugger : DebuggerWindow
 {
-    public override string Name => "Campaign Events Debugger";
+    public override string Name => "DevKit | Campaign Events";
 
     private bool _firstTime = true;
     private bool _showTimestamps = true;

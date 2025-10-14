@@ -8,13 +8,13 @@ namespace DevKit.Debuggers;
 [HarmonyPatch]
 public static class DebuggerWindows
 {
-    public static readonly DebuggerWindow WindowManager = new WindowManager();
+    public static readonly DebuggerWindow ControlPanel = new ControlPanel();
     public static readonly DebuggerWindow MissionDebugger = new MissionDebugger();
     public static readonly DebuggerWindow CampaignEventsDebugger = new CampaignEventsDebugger();
     public static readonly DebuggerWindow MobilePartyDebugger = new MobilePartyDebugger(0);
     private static readonly List<DebuggerWindow> Windows =
     [
-        WindowManager,
+        ControlPanel,
         MissionDebugger,
         CampaignEventsDebugger,
         MobilePartyDebugger

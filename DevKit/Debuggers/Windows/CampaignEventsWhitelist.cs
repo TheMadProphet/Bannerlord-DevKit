@@ -6,7 +6,7 @@ namespace DevKit.Debuggers.Windows;
 
 public class CampaignEventsWhitelist : DebuggerWindow
 {
-    public override string Name => "Campaign Events Debugger - Whitelist";
+    public override string Name => "DevKit | Campaign Events | Whitelist";
 
     public readonly HashSet<string> Whitelist = [];
     private readonly List<string> _allEvents;

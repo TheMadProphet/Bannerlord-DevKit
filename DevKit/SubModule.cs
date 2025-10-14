@@ -12,7 +12,7 @@ public class SubModule : MBSubModuleBase
 {
     private static Harmony HarmonyInstance { get; set; }
 
-    private GameKey _openWindowManagerKey;
+    private GameKey _openControlPanelKey;
     private GameKey _openMobilePartyDebuggerKey;
     private GameKey _openCampaignEventsDebuggerKey;
     private GameKey _openMissionDebuggerKey;
@@ -25,7 +25,7 @@ public class SubModule : MBSubModuleBase
 
         DevKitHotKeyManager.Initialize();
         var devkitCategory = HotKeyManager.GetCategory(nameof(DevKitGameKeyContext));
-        _openWindowManagerKey = devkitCategory.GetGameKey("OpenWindowManager");
+        _openControlPanelKey = devkitCategory.GetGameKey("OpenControlPanel");
         _openMobilePartyDebuggerKey = devkitCategory.GetGameKey("OpenMobilePartyDebugger");
         _openCampaignEventsDebuggerKey = devkitCategory.GetGameKey("OpenCampaignEventsDebugger");
         _openMissionDebuggerKey = devkitCategory.GetGameKey("OpenMissionDebugger");
@@ -34,8 +34,8 @@ public class SubModule : MBSubModuleBase
     protected override void OnApplicationTick(float dt)
     {
         var isShiftDown = Input.IsKeyDown(InputKey.LeftShift);
-        if (Input.IsKeyPressed(_openWindowManagerKey.KeyboardKey.InputKey))
-            DebuggerWindows.WindowManager.Toggle();
+        if (Input.IsKeyPressed(_openControlPanelKey.KeyboardKey.InputKey))
+            DebuggerWindows.ControlPanel.Toggle();
 
         if (Input.IsKeyPressed(_openMobilePartyDebuggerKey.KeyboardKey.InputKey))
         {

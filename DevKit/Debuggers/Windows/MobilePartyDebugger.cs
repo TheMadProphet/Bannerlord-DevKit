@@ -17,12 +17,11 @@ namespace DevKit.Debuggers.Windows;
 
 public class MobilePartyDebugger : DebuggerWindow
 {
-    public override string Name => $"Mobile Party Debugger##{_id}";
+    public override string Name => $"DevKit | Mobile Party Debugger##{_id}";
 
-    private int _id;
+    private readonly int _id;
     private bool _firstTime = true;
     private MobileParty _mobileParty;
-    private MobileParty _lastHoveredParty;
 
     private bool _showIdButtons = true;
     private bool _showEncyclopediaButtons = true;
@@ -46,7 +45,6 @@ public class MobilePartyDebugger : DebuggerWindow
         {
             _firstTime = false;
             _mobileParty = MobileParty.MainParty;
-            _lastHoveredParty = null;
         }
 
         Imgui.Checkbox("ID Buttons", ref _showIdButtons);
@@ -103,9 +101,6 @@ public class MobilePartyDebugger : DebuggerWindow
 
     public void OnPartyHover(MobileParty party)
     {
-        if (party != MobileParty.MainParty)
-            _lastHoveredParty = party;
-
         if (_autoSelectOnHover)
             _mobileParty = party;
     }

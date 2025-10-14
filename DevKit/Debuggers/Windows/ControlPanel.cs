@@ -6,9 +6,9 @@ using TaleWorlds.ModuleManager;
 
 namespace DevKit.Debuggers.Windows;
 
-public class WindowManager : DebuggerWindow
+public class ControlPanel : DebuggerWindow
 {
-    public override string Name => "Modding Development Kit";
+    public override string Name => "DevKit Control Panel";
 
     protected override void Render()
     {
@@ -59,11 +59,11 @@ public class WindowManager : DebuggerWindow
         }
     }
 
-    [CommandLineFunctionality.CommandLineArgumentFunction("manager", "devkit")]
+    [CommandLineFunctionality.CommandLineArgumentFunction("control_panel", "devkit")]
     public static string ToggleWindow(List<string> args)
     {
-        DebuggerWindows.WindowManager.Toggle();
+        DebuggerWindows.ControlPanel.Toggle();
 
-        return "Toggled DevKit Debuggers window.";
+        return $"Toggled {DebuggerWindows.ControlPanel.Name} window.";
     }
 }

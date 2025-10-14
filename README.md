@@ -32,12 +32,13 @@ time.
 
 ## 🧪 Usage
 
-- To open the **Development Kit Manager**
-  - Press **`F1`** (_can be changed in settings_).
-  - Or, run `devkit.manager` in the console.
-- To open specific debug windows, use the following hotkeys (_can be changed in settings_):
+- To open the **DevKit Control Panel**
+  - Press **`F1`** (_can be changed in keybindings settings_).
+  - Or, run `devkit.control_panel` in the console.
+- To open specific debug windows, use the following hotkeys (_can be changed in keybindings settings_):
   - **`F2`** - Mobile Party Debugger
   - **`F3`** - Campaign Events Debugger
+  - **`F4`** - Mission Debugger
 - Use `Shift` + window hotkey to open new instance of the window.
 
 ---

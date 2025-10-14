@@ -30,23 +30,23 @@ public static class DevKitHotKeyManager
         CategoryName.AddVariationWithId(CategoryId, new TextObject("Modding DevKit"), []);
 
         SetupHotkey(
-            DevKitGameKeyContext.KeyMap.OpenWindowManager,
-            "Toggle Window Manager",
-            "Toggles the DevKit Window Manager"
+            DevKitGameKeyContext.KeyMap.OpenControlPanel,
+            "Toggle Control Panel",
+            "Toggles the DevKit Control Panel Window"
         );
         SetupHotkey(
             DevKitGameKeyContext.KeyMap.OpenMobilePartyDebugger,
-            "Toggle Mobile Party Debugger",
+            "Toggle Mobile Party Window",
             "Toggles the Mobile Party Debugger Window"
         );
         SetupHotkey(
             DevKitGameKeyContext.KeyMap.OpenCampaignEventsDebugger,
-            "Toggle Campaign Events Debugger",
+            "Toggle Campaign Events Window",
             "Toggles the Campaign Events Debugger Window"
         );
         SetupHotkey(
             DevKitGameKeyContext.KeyMap.OpenMissionDebugger,
-            "Toggle Mission Debugger",
+            "Toggle Mission Window",
             "Toggles the Mission Debugger Window"
         );
     }
@@ -57,8 +57,8 @@ public static class DevKitHotKeyManager
         string description
     )
     {
-        var openWindowManagerKey = CategoryId + "_" + (int)key;
-        KeyName.AddVariationWithId(openWindowManagerKey, new TextObject(name), []);
-        KeyDescription.AddVariationWithId(openWindowManagerKey, new TextObject(description), []);
+        var keyStringId = CategoryId + "_" + (int)key;
+        KeyName.AddVariationWithId(keyStringId, new TextObject(name), []);
+        KeyDescription.AddVariationWithId(keyStringId, new TextObject(description), []);
     }
 }
