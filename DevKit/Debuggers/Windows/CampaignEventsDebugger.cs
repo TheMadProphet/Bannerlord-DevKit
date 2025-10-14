@@ -12,12 +12,11 @@ public class CampaignEventsDebugger : DebuggerWindow
 {
     public override string Name => "Campaign Events Debugger";
 
-    private static bool _firstTime = true;
-    private static bool _showTimestamps = true;
-    private static bool _showArgs = true;
+    private bool _firstTime = true;
+    private bool _showTimestamps = true;
+    private bool _showArgs = true;
 
-    private static readonly List<(string EventName, object Args, DateTime Timestamp)> EventLog = [];
-    public static readonly HashSet<string> Whitelist = [];
+    private readonly List<(string EventName, object Args, DateTime Timestamp)> _eventLog = [];
     private CampaignEventsWhitelist _whitelistWindow;
 
     protected override void Render()
@@ -25,7 +24,7 @@ public class CampaignEventsDebugger : DebuggerWindow
         if (Campaign.Current == null || Campaign.Current.MapSceneWrapper == null)
         {
             _firstTime = true;
-            EventLog.Clear();
+            _eventLog.Clear();
             Imgui.Text("No active campaign.");
             return;
         }
@@ -39,7 +38,7 @@ public class CampaignEventsDebugger : DebuggerWindow
         _whitelistWindow.Tick();
 
         // Controls
-        Button("Clear Log", () => EventLog.Clear());
+        Button("Clear Log", () => _eventLog.Clear());
         Imgui.SameLine(0, 10);
         Button("Whitelist...", () => _whitelistWindow.Toggle(), "Open whitelist window");
         Imgui.SameLine(0, 10);
@@ -59,7 +58,7 @@ public class CampaignEventsDebugger : DebuggerWindow
             "Event Log",
             () =>
             {
-                foreach (var (eventName, args, timestamp) in EventLog)
+                foreach (var (eventName, args, timestamp) in _eventLog)
                 {
                     if (_showTimestamps)
                     {
@@ -84,7 +83,7 @@ public class CampaignEventsDebugger : DebuggerWindow
     }
 
     // Wrap all events in CampaignEvents with our own handlers
-    private static List<string> WrapAllEvents()
+    private List<string> WrapAllEvents()
     {
         var events = new List<string>();
         try
@@ -118,10 +117,10 @@ public class CampaignEventsDebugger : DebuggerWindow
 
                 var wrapperMethod = typeof(CampaignEventsDebugger).GetMethod(
                     nameof(CreateWrapper),
-                    BindingFlags.Static | BindingFlags.NonPublic
+                    BindingFlags.Instance | BindingFlags.NonPublic
                 );
                 var wrapperMethodGeneric = wrapperMethod.MakeGenericMethod(genericArg);
-                var handler = wrapperMethodGeneric.Invoke(null, [eventName]);
+                var handler = wrapperMethodGeneric.Invoke(this, [eventName]);
 
                 var addMethod = fieldType.GetMethod("AddNonSerializedListener");
                 addMethod?.Invoke(eventInstance, [null, handler]);
@@ -141,17 +140,17 @@ public class CampaignEventsDebugger : DebuggerWindow
         return events.OrderBy(e => e).ToList();
     }
 
-    private static Action<T> CreateWrapper<T>(string eventName)
+    private Action<T> CreateWrapper<T>(string eventName)
     {
         return data =>
         {
-            if (!Whitelist.Contains(eventName))
+            if (!_whitelistWindow.Whitelist.Contains(eventName))
                 return;
 
-            if (EventLog.Count > 100)
-                EventLog.RemoveAt(EventLog.Count - 1);
+            if (_eventLog.Count > 100)
+                _eventLog.RemoveAt(_eventLog.Count - 1);
 
-            EventLog.Insert(0, (eventName, data, DateTime.Now));
+            _eventLog.Insert(0, (eventName, data, DateTime.Now));
         };
     }
 }

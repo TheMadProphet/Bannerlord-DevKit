@@ -8,8 +8,8 @@ public class CampaignEventsWhitelist : DebuggerWindow
 {
     public override string Name => "Campaign Events Debugger - Whitelist";
 
+    public readonly HashSet<string> Whitelist = [];
     private readonly List<string> _allEvents;
-    private static HashSet<string> Whitelist => CampaignEventsDebugger.Whitelist;
 
     public CampaignEventsWhitelist(List<string> allEvents)
     {
@@ -72,7 +72,7 @@ public class CampaignEventsWhitelist : DebuggerWindow
         Whitelist.ExceptWith(tickEvents);
     }
 
-    private static void DeselectFrequentEvents()
+    private void DeselectFrequentEvents()
     {
         Whitelist.ExceptWith(FrequentEvents);
     }
