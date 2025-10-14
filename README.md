@@ -8,7 +8,7 @@
 
 **Modding DevKit** is a **developer toolkit and debugging suite** built to streamline the modding workflow for
 *Mount & Blade II: Bannerlord*.  
-Created by **Prophet**, this mod provides in-game tools for testing, inspecting, and tweaking game systems in real
+This mod provides in-game tools for testing, inspecting, and tweaking game systems in real
 time.
 
 ---
@@ -18,7 +18,6 @@ time.
 - 🧩 **Debug windows** for different systems
 - 🪶 **Entity inspectors** (parties, missions, agents, etc.)
 - 🧰 **Custom utility buttons and actions** for faster testing
-- 💡 **Extensible API** for modders to register their own tools
 
 ---
 
@@ -32,31 +31,11 @@ time.
 
 ## 🧪 Usage
 
-- TODO: Press **F11** (default hotkey) to open the **DevKit Debug Menu**.
-- Use the available tabs to access categories such as:
-- *Spawner*, *Economy Tools*, *Battle Simulator*, *Entity Inspector*, etc.
-- Developers can expand DevKit by adding new debug windows or tools using the provided API.
+- Press **F1** (can be changed in settings) to open the **DevKit Debug Menu**.
+- Use the available windows and tools to inspect game state and test features.
 
 ---
+
 ## TODO - Previews
 
 ---
-
-## 🧩 For Mod Developers
-TODO: Maybe
-
-You can easily extend **Modding DevKit** with your own tools or debug windows.
-
-Example:
-
-```csharp
-DevKitAPI.RegisterWindow(new MyCustomDebugWindow());
-```
-
-This allows your mod’s debugging or testing functionality to integrate seamlessly into the DevKit interface.
-
-## 📜 Credits
-
-Created and maintained by Prophet (TheMadProphet)
-Built for developers who prefer less waiting and more creating.
-
