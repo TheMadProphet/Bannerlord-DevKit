@@ -12,7 +12,34 @@ public class DevKitGameKeyContext : GameKeyContext
                 (int)KeyMap.OpenWindowManager,
                 "OpenWindowManager",
                 nameof(DevKitGameKeyContext),
-                InputKey.F9,
+                InputKey.F1,
+                nameof(DevKitGameKeyContext)
+            )
+        );
+        RegisterGameKey(
+            new GameKey(
+                (int)KeyMap.OpenMobilePartyDebugger,
+                "OpenMobilePartyDebugger",
+                nameof(DevKitGameKeyContext),
+                InputKey.F2,
+                nameof(DevKitGameKeyContext)
+            )
+        );
+        RegisterGameKey(
+            new GameKey(
+                (int)KeyMap.OpenCampaignEventsDebugger,
+                "OpenCampaignEventsDebugger",
+                nameof(DevKitGameKeyContext),
+                InputKey.F3,
+                nameof(DevKitGameKeyContext)
+            )
+        );
+        RegisterGameKey(
+            new GameKey(
+                (int)KeyMap.OpenMissionDebugger,
+                "OpenMissionDebugger",
+                nameof(DevKitGameKeyContext),
+                InputKey.F4,
                 nameof(DevKitGameKeyContext)
             )
         );
@@ -20,6 +47,9 @@ public class DevKitGameKeyContext : GameKeyContext
 
     public enum KeyMap
     {
-        OpenWindowManager = 145
+        OpenWindowManager = 140,
+        OpenMobilePartyDebugger = 141,
+        OpenCampaignEventsDebugger = 142,
+        OpenMissionDebugger = 143,
     }
 }

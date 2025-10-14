@@ -27,12 +27,27 @@ public static class DevKitHotKeyManager
 
         HotKeyManager.RegisterInitialContexts(categories, true);
 
-        CategoryName.AddVariationWithId(CategoryId, new TextObject("DevKit"), []);
+        CategoryName.AddVariationWithId(CategoryId, new TextObject("Modding DevKit"), []);
 
         SetupHotkey(
             DevKitGameKeyContext.KeyMap.OpenWindowManager,
-            "Open Window Manager",
-            "Opens the DevKit Window Manager"
+            "Toggle Window Manager",
+            "Toggles the DevKit Window Manager"
+        );
+        SetupHotkey(
+            DevKitGameKeyContext.KeyMap.OpenMobilePartyDebugger,
+            "Toggle Mobile Party Debugger",
+            "Toggles the Mobile Party Debugger Window"
+        );
+        SetupHotkey(
+            DevKitGameKeyContext.KeyMap.OpenCampaignEventsDebugger,
+            "Toggle Campaign Events Debugger",
+            "Toggles the Campaign Events Debugger Window"
+        );
+        SetupHotkey(
+            DevKitGameKeyContext.KeyMap.OpenMissionDebugger,
+            "Toggle Mission Debugger",
+            "Toggles the Mission Debugger Window"
         );
     }
 
