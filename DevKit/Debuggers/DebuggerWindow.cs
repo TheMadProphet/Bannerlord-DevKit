@@ -31,11 +31,17 @@ public abstract class DebuggerWindow
 
     #region Helpers
 
-    protected static void Button(string label, Action onClick)
+    protected static void Button(string label, Action onClick, string tooltip = "")
     {
-        var clicked = Imgui.Button(label);
-        if (clicked)
-            onClick();
+        WithTooltip(
+            () =>
+            {
+                var clicked = Imgui.Button(label);
+                if (clicked)
+                    onClick();
+            },
+            tooltip
+        );
     }
 
     protected static void Collapse(string label, Action content)
@@ -43,6 +49,12 @@ public abstract class DebuggerWindow
         var displayItems = Imgui.CollapsingHeader(label);
         if (displayItems)
             content();
+    }
+    protected static void WithTooltip(Action content, string tooltip = "")
+    {
+        content();
+        if (Imgui.IsItemHovered() && !string.IsNullOrEmpty(tooltip))
+            Imgui.SetTooltip(tooltip);
     }
 
     #endregion
