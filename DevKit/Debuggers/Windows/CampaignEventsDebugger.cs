@@ -18,6 +18,7 @@ public class CampaignEventsDebugger : DebuggerWindow
 
     private readonly List<(string EventName, object Args, DateTime Timestamp)> _eventLog = [];
     private CampaignEventsWhitelist _whitelistWindow;
+    private readonly List<(object EventInstance, Delegate Handler)> _subscribedHandlers = [];
 
     protected override void Render()
     {
@@ -124,6 +125,8 @@ public class CampaignEventsDebugger : DebuggerWindow
 
                 var addMethod = fieldType.GetMethod("AddNonSerializedListener");
                 addMethod?.Invoke(eventInstance, [null, handler]);
+
+                _subscribedHandlers.Add((eventInstance, (Delegate)handler));
             }
         }
         catch (Exception ex)
@@ -152,5 +155,39 @@ public class CampaignEventsDebugger : DebuggerWindow
 
             _eventLog.Insert(0, (eventName, data, DateTime.Now));
         };
+    }
+
+    protected override void OnDispose()
+    {
+        // Unsubscribe all event handlers to prevent memory leaks
+        foreach (var (eventInstance, handler) in _subscribedHandlers)
+        {
+            try
+            {
+                var eventType = eventInstance.GetType();
+                var removeMethod = eventType.GetMethod("RemoveListener");
+                if (removeMethod != null)
+                {
+                    removeMethod.Invoke(eventInstance, [handler]);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log error but continue cleanup
+                InformationManager.DisplayMessage(
+                    new InformationMessage(
+                        $"DevKit: Error unsubscribing event handler: {ex.Message}",
+                        Colors.Red
+                    )
+                );
+            }
+        }
+        _subscribedHandlers.Clear();
+        _eventLog.Clear();
+
+        // Dispose child window if it exists
+        _whitelistWindow?.Dispose();
+
+        base.OnDispose();
     }
 }

@@ -5,7 +5,7 @@ using TaleWorlds.Library;
 
 namespace DevKit.Debuggers;
 
-public abstract class DebuggerWindow
+public abstract class DebuggerWindow : IDisposable
 {
     public virtual string Name => "Need to override Name";
     protected readonly int Id;
@@ -93,6 +93,18 @@ public abstract class DebuggerWindow
         content();
         if (Imgui.IsItemHovered() && !string.IsNullOrEmpty(tooltip))
             Imgui.SetTooltip(tooltip);
+    }
+
+    #endregion
+
+    #region Disposal
+
+    protected virtual void OnDispose() { }
+
+    public void Dispose()
+    {
+        OnDispose();
+        GC.SuppressFinalize(this);
     }
 
     #endregion

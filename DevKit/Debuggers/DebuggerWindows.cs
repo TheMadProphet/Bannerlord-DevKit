@@ -60,6 +60,9 @@ public static class DebuggerWindows
     {
         // Defer removal to avoid modifying Windows list during Tick() iteration
         WindowsToRemove.Add(window);
+
+        // Dispose window to clean up resources and prevent memory leaks
+        window.Dispose();
     }
 
     public static IEnumerable<T> GetAllWindows<T>()
