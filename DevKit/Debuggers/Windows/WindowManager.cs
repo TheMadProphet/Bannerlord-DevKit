@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using TaleWorlds.Engine;
 using TaleWorlds.Library;
 
@@ -16,10 +17,22 @@ public class WindowManager : DebuggerWindow
         Button("Mobile Party Debugger", () => DebuggerWindows.MobilePartyDebugger.Toggle());
 
         Imgui.NewLine();
-        
+
         Imgui.Text("Mission Windows");
         Imgui.Separator();
         Button("Mission Debugger", () => DebuggerWindows.MissionDebugger.Toggle());
+
+        Imgui.NewLine();
+
+        Imgui.Text("Other");
+        Imgui.Separator();
+        Button("BREAK", Break, "Break into the debugger to evaluate custom code / game state.");
+    }
+
+    private void Break()
+    {
+        if (Debugger.IsAttached)
+            Debugger.Break();
     }
 
     [CommandLineFunctionality.CommandLineArgumentFunction("manager", "devkit")]
