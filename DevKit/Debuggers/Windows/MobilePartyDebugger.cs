@@ -17,15 +17,21 @@ namespace DevKit.Debuggers.Windows;
 
 public class MobilePartyDebugger : DebuggerWindow
 {
-    public override string Name => "Mobile Party Debugger";
+    public override string Name => $"Mobile Party Debugger##{_id}";
 
-    private static bool _firstTime = true;
-    private static MobileParty _mobileParty;
-    private static MobileParty _lastHoveredParty;
+    private int _id;
+    private bool _firstTime = true;
+    private MobileParty _mobileParty;
+    private MobileParty _lastHoveredParty;
 
-    private static bool _showIdButtons = true;
-    private static bool _showEncyclopediaButtons = true;
-    private static bool _autoSelectOnHover = false;
+    private bool _showIdButtons = true;
+    private bool _showEncyclopediaButtons = true;
+    private bool _autoSelectOnHover = false;
+
+    public MobilePartyDebugger(int? id = null)
+    {
+        _id = id ?? DebuggerWindows.GetAllWindows<DebuggerWindow>().Count();
+    }
 
     protected override void Render()
     {
@@ -66,14 +72,9 @@ public class MobilePartyDebugger : DebuggerWindow
             "SELECT PARTY ...",
             () =>
             {
-                Imgui.Text("Player:");
-                PartyCheckbox(MobileParty.MainParty);
-                Imgui.NewLine();
-                Imgui.Text("Last hovered:");
-                if (_lastHoveredParty == null)
-                    Imgui.Text("<Hover over non-player party on the map>");
-                else
-                    PartyCheckbox(_lastHoveredParty);
+                Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref GrayStyleColor);
+                Imgui.Text("Select a party from the list below.");
+                Imgui.PopStyleColor();
                 Imgui.NewLine();
 
                 Collapse(
@@ -100,7 +101,7 @@ public class MobilePartyDebugger : DebuggerWindow
         );
     }
 
-    public static void OnPartyHover(MobileParty party)
+    public void OnPartyHover(MobileParty party)
     {
         if (party != MobileParty.MainParty)
             _lastHoveredParty = party;
@@ -109,7 +110,7 @@ public class MobilePartyDebugger : DebuggerWindow
             _mobileParty = party;
     }
 
-    private static void DisplayPartyInfo(MobileParty party)
+    private void DisplayPartyInfo(MobileParty party)
     {
         if (!party.IsActive)
         {
@@ -290,18 +291,15 @@ public class MobilePartyDebugger : DebuggerWindow
         MapScreen.Instance.TeleportCameraToMainParty();
     }
 
-    private static void PartyCheckboxList(List<MobileParty> parties)
+    private void PartyCheckboxList(List<MobileParty> parties)
     {
         foreach (var party in parties.OrderBy(it => it.Name.ToString()))
         {
-            if (party == MobileParty.MainParty)
-                continue;
-
             PartyCheckbox(party);
         }
     }
 
-    private static void PartyCheckbox(MobileParty party)
+    private void PartyCheckbox(MobileParty party)
     {
         var isSelected = party == _mobileParty;
         var partyLabel = $"{party.Name} ({party.MemberRoster.TotalManCount})##{party.StringId}";
@@ -323,7 +321,7 @@ public class MobilePartyDebugger : DebuggerWindow
         return new Vec3(r * mult, g * mult, b * mult, 1);
     }
 
-    private static void FieldInfo(
+    private void FieldInfo(
         string label = "",
         string value = "",
         string id = "",
@@ -390,6 +388,10 @@ public class MobilePartyHoverPatch
 {
     public static void Postfix(MobileParty __instance)
     {
-        MobilePartyDebugger.OnPartyHover(__instance);
+        var debuggers = DebuggerWindows.GetAllWindows<MobilePartyDebugger>();
+        foreach (var debugger in debuggers)
+        {
+            debugger.OnPartyHover(__instance);
+        }
     }
 }

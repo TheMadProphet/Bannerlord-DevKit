@@ -1,4 +1,5 @@
 using DevKit.Debuggers;
+using DevKit.Debuggers.Windows;
 using DevKit.Hotkeys;
 using HarmonyLib;
 using TaleWorlds.Engine.GauntletUI;
@@ -32,16 +33,32 @@ public class SubModule : MBSubModuleBase
 
     protected override void OnApplicationTick(float dt)
     {
+        var isShiftDown = Input.IsKeyDown(InputKey.LeftShift);
         if (Input.IsKeyPressed(_openWindowManagerKey.KeyboardKey.InputKey))
             DebuggerWindows.WindowManager.Toggle();
 
         if (Input.IsKeyPressed(_openMobilePartyDebuggerKey.KeyboardKey.InputKey))
-            DebuggerWindows.MobilePartyDebugger.Toggle();
+        {
+            if (isShiftDown)
+                DebuggerWindows.AddWindow(new MobilePartyDebugger());
+            else
+                DebuggerWindows.MobilePartyDebugger.Toggle();
+        }
 
         if (Input.IsKeyPressed(_openCampaignEventsDebuggerKey.KeyboardKey.InputKey))
-            DebuggerWindows.CampaignEventsDebugger.Toggle();
+        {
+            if (isShiftDown)
+                DebuggerWindows.AddWindow(new CampaignEventsDebugger());
+            else
+                DebuggerWindows.CampaignEventsDebugger.Toggle();
+        }
 
         if (Input.IsKeyPressed(_openMissionDebuggerKey.KeyboardKey.InputKey))
-            DebuggerWindows.MissionDebugger.Toggle();
+        {
+            if (isShiftDown)
+                DebuggerWindows.AddWindow(new MissionDebugger());
+            else
+                DebuggerWindows.MissionDebugger.Toggle();
+        }
     }
 }
