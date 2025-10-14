@@ -1,0 +1,26 @@
+<Module>
+  <Name value="Bannerlord DevKit"/>
+  <Id value="DevKit"/>
+  <Version value="v0.0.1"/>
+  <SingleplayerModule value="true"/>
+  <MultiplayerModule value="false"/>
+  <DependedModules>
+    <DependedModule Id="Native" DependentVersion="v1.2.12"/>
+    <DependedModule Id="SandBoxCore" DependentVersion="v1.2.12"/>
+    <DependedModule Id="Sandbox" DependentVersion="v1.2.12"/>
+    <DependedModule Id="CustomBattle" DependentVersion="v1.2.12"/>
+    <DependedModule Id="StoryMode" DependentVersion="v1.2.12"/>
+  </DependedModules>
+  <SubModules>
+    <SubModule>
+      <Name value="DevKit"/>
+      <DLLName value="DevKit.dll"/>
+      <SubModuleClassType value="DevKit.SubModule"/>
+      <Tags>
+        <Tag key="DedicatedServerType" value="none"/>
+        <Tag key="IsNoRenderModeElement" value="false"/>
+      </Tags>
+    </SubModule>
+  </SubModules>
+  <Xmls/>
+</Module>
