@@ -39,7 +39,7 @@ time.
 ## Previews
 
 <details>
-<summary>Campaign Events Debugger</summary>
+<summary>Campaign Events Debugger <code>(F3)</code></summary>
 
 ![DevKit Debug Menu](images/campaignEventsPreview.png)
 
