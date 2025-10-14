@@ -6,7 +6,7 @@ namespace DevKit.Debuggers.Windows;
 public class MissionDebugger : DebuggerWindow
 {
     public override string Name => "Mission Debugger";
-    private static bool _firstTime = true;
+    private bool _firstTime = true;
 
     private static Mission Mission => Mission.Current;
 
