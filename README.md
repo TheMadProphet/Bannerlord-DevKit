@@ -32,10 +32,10 @@ time.
 
 ## 🧪 Usage
 
-- To open the **DevKit Manager Menu**
-  - Press **`F1`** (can be changed in settings).
+- To open the **Development Kit Manager**
+  - Press **`F1`** (_can be changed in settings_).
   - Or, run `devkit.manager` in the console.
-- To open specific debug windows, use the following hotkeys:
+- To open specific debug windows, use the following hotkeys (_can be changed in settings_):
   - **`F2`** - Mobile Party Debugger
   - **`F3`** - Campaign Events Debugger
 - Use `Shift` + window hotkey to open new instance of the window.
