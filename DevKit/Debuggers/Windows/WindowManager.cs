@@ -5,10 +5,11 @@ namespace DevKit.Debuggers.Windows;
 
 public class WindowManager : DebuggerWindow
 {
-    protected override string Name => "Modding DevKit";
+    public override string Name => "Modding Development Kit";
 
     protected override void Render()
     {
+        Button("Campaign Events", () => DebuggerWindows.CampaignEventsDebugger.Toggle());
         Button("Mission Debugger", () => DebuggerWindows.MissionDebugger.Toggle());
     }
 

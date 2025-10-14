@@ -10,7 +10,13 @@ public static class DebuggerWindows
 {
     public static readonly DebuggerWindow WindowManager = new WindowManager();
     public static readonly DebuggerWindow MissionDebugger = new MissionDebugger();
-    private static readonly List<DebuggerWindow> Windows = [WindowManager, MissionDebugger];
+    public static readonly DebuggerWindow CampaignEventsDebugger = new CampaignEventsDebugger();
+    private static readonly List<DebuggerWindow> Windows =
+    [
+        WindowManager,
+        MissionDebugger,
+        CampaignEventsDebugger
+    ];
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(ScreenManager), "UpdateLateTickLayers")]
