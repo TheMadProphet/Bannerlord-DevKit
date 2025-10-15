@@ -70,6 +70,19 @@ public abstract class DebuggerWindow : IDisposable
             onClick();
     }
 
+    protected bool DropdownButton(string label, bool open, Action content)
+    {
+        Imgui.Text(label);
+        Imgui.SameLine(0, 10);
+        var newState = open;
+        SmallButton(open ? $" ^ ##{label}" : $" V ##{label}", () => newState = !newState);
+
+        if (newState)
+            content();
+
+        return newState;
+    }
+
     protected static void Collapse(string label, Action content)
     {
         var displayItems = Imgui.CollapsingHeader(label);

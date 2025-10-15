@@ -289,6 +289,7 @@
   <ItemGroup>
     <Compile Include="Debuggers\DebuggerWindow.cs" />
     <Compile Include="Debuggers\DebuggerWindows.cs" />
+    <Compile Include="Debuggers\Windows\AgentDebugger.cs" />
     <Compile Include="Debuggers\Windows\CampaignEventsDebugger.cs" />
     <Compile Include="Debuggers\Windows\CampaignEventsWhitelist.cs" />
     <Compile Include="Debuggers\Windows\MissionDebugger.cs" />

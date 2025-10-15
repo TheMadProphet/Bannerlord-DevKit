@@ -18,6 +18,7 @@ public class MissionDebugger : DebuggerWindow
 
     protected override void Render()
     {
+        // TODO: Teams
         if (Mission == null || Mission.IsFinalized)
         {
             _firstTime = true;
@@ -131,19 +132,6 @@ public class MissionDebugger : DebuggerWindow
                 Imgui.NewLine();
             }
         );
-    }
-
-    private bool DropdownButton(string label, bool open, Action content)
-    {
-        Imgui.Text(label);
-        Imgui.SameLine(0, 10);
-        var newState = open;
-        SmallButton(open ? $" ^ ##{label}" : $" V ##{label}", () => newState = !newState);
-
-        if (newState)
-            content();
-
-        return newState;
     }
 
     private void BooleanField(string label, bool value)
