@@ -1,12 +1,18 @@
-﻿using TaleWorlds.Engine;
+﻿using System;
+using TaleWorlds.Core;
+using TaleWorlds.Engine;
 using TaleWorlds.MountAndBlade;
+using TaleWorlds.MountAndBlade.View.MissionViews;
 
 namespace DevKit.Debuggers.Windows;
 
 public class MissionDebugger : DebuggerWindow
 {
     public override string Name => "DevKit | Mission Debugger";
+
     private bool _firstTime = true;
+    private bool _combatModeIsOpen;
+    private bool _combatTypeIsOpen;
 
     private static Mission Mission => Mission.Current;
 
@@ -25,13 +31,43 @@ public class MissionDebugger : DebuggerWindow
             // Init?
         }
 
-        Imgui.Text($"SceneName: {Mission.SceneName}");
-        Imgui.Text($"SceneLevels: {Mission.SceneLevels}");
-        Imgui.Text($"TerrainType: {Mission.TerrainType}");
-        Imgui.NewLine();
-
-        Imgui.Text($"Mode: {Mission.Mode}");
-        Imgui.Text($"CombatType: {Mission.CombatType}");
+        Imgui.Text("Mission");
+        Imgui.Separator();
+        _combatModeIsOpen = DropdownButton(
+            $"Mode: {Mission.Mode}",
+            _combatModeIsOpen,
+            () =>
+            {
+                var index = 0;
+                foreach (MissionMode mode in Enum.GetValues(typeof(MissionMode)))
+                {
+                    Button(mode.ToString(), () => Mission.SetMissionMode(mode, false));
+                    index++;
+                    if (index % 5 != 0)
+                        Imgui.SameLine(0, 10);
+                }
+                Imgui.NewLine();
+                Imgui.Separator();
+            }
+        );
+        _combatTypeIsOpen = DropdownButton(
+            $"CombatType: {Mission.CombatType}",
+            _combatTypeIsOpen,
+            () =>
+            {
+                foreach (
+                    Mission.MissionCombatType mode in Enum.GetValues(
+                        typeof(Mission.MissionCombatType)
+                    )
+                )
+                {
+                    Button(mode.ToString(), () => Mission.SetMissionCombatType(mode));
+                    Imgui.SameLine(0, 10);
+                }
+                Imgui.NewLine();
+                Imgui.Separator();
+            }
+        );
         var battleType = Mission.MissionTeamAIType switch
         {
             Mission.MissionTeamAITypeEnum.FieldBattle => "FieldBattle",
@@ -40,10 +76,16 @@ public class MissionDebugger : DebuggerWindow
             _ => "<None>"
         };
         Imgui.Text($"Battle Type: {battleType}");
+        Imgui.Text($"RequireCivilianEquipment: {Mission.DoesMissionRequireCivilianEquipment}");
         Imgui.Text($"CurrentTime: {Mission.CurrentTime}");
 
-        Imgui.Text($"RequireCivilianEquipment: {Mission.DoesMissionRequireCivilianEquipment}");
-        Imgui.Text($"EnemyAlarmStateIndicator: {Mission.EnemyAlarmStateIndicator}");
+        Imgui.NewLine();
+
+        Imgui.Text("Scene");
+        Imgui.Separator();
+        Imgui.Text($"SceneName: {Mission.SceneName}");
+        Imgui.Text($"SceneLevels: {Mission.SceneLevels}");
+        Imgui.Text($"TerrainType: {Mission.TerrainType}");
 
         Imgui.NewLine();
 
@@ -73,8 +115,15 @@ public class MissionDebugger : DebuggerWindow
                     if (behavior is MissionLogic)
                     {
                         Imgui.SameLine(0, 10);
-                        Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref GrayStyleColor);
+                        Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref YellowStyleColor);
                         Imgui.Text("(MissionLogic)");
+                        Imgui.PopStyleColor();
+                    }
+                    else if (behavior is MissionView)
+                    {
+                        Imgui.SameLine(0, 10);
+                        Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref PurpleStyleColor);
+                        Imgui.Text("(MissionView)");
                         Imgui.PopStyleColor();
                     }
                 }
@@ -82,6 +131,19 @@ public class MissionDebugger : DebuggerWindow
                 Imgui.NewLine();
             }
         );
+    }
+
+    private bool DropdownButton(string label, bool open, Action content)
+    {
+        Imgui.Text(label);
+        Imgui.SameLine(0, 10);
+        var newState = open;
+        SmallButton(open ? $" ^ ##{label}" : $" V ##{label}", () => newState = !newState);
+
+        if (newState)
+            content();
+
+        return newState;
     }
 
     private void BooleanField(string label, bool value)

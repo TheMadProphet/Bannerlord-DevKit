@@ -44,6 +44,7 @@ public abstract class DebuggerWindow : IDisposable
 
     public static Vec3 GrayStyleColor = new(1, 1, 1, 0.5f);
     public static Vec3 YellowStyleColor = new(1, 1, 0, 0.85f);
+    public static Vec3 PurpleStyleColor = new(0.8f, 0.4f, 1f, 0.85f);
 
     #endregion
 
