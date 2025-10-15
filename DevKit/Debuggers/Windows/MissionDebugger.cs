@@ -52,16 +52,18 @@ public class MissionDebugger : DebuggerWindow
             () =>
             {
                 foreach (var behavior in Mission.MissionBehaviors)
-                    Imgui.Text($"{behavior.GetType().Name}");
-                Imgui.NewLine();
-            }
-        );
-        Collapse(
-            "Mission Logics",
-            () =>
-            {
-                foreach (var behavior in Mission.MissionLogics)
-                    Imgui.Text($"{behavior.GetType().Name}");
+                {
+                    Imgui.Text($"- {behavior.GetType().Name}");
+
+                    if (behavior is MissionLogic)
+                    {
+                        Imgui.SameLine(0, 10);
+                        Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref GrayStyleColor);
+                        Imgui.Text("(MissionLogic)");
+                        Imgui.PopStyleColor();
+                    }
+                }
+
                 Imgui.NewLine();
             }
         );
@@ -69,16 +71,32 @@ public class MissionDebugger : DebuggerWindow
             "UI Window Access",
             () =>
             {
-                Imgui.Text($"Inventory: {Mission.IsInventoryAccessAllowed}");
-                Imgui.Text($"CharacterWindow: {Mission.IsCharacterWindowAccessAllowed}");
-                Imgui.Text($"QuestScreen: {Mission.IsQuestScreenAccessAllowed}");
-                Imgui.Text($"PartyWindow: {Mission.IsPartyWindowAccessAllowed}");
-                Imgui.Text($"KingdomWindow: {Mission.IsKingdomWindowAccessAllowed}");
-                Imgui.Text($"ClanWindow: {Mission.IsClanWindowAccessAllowed}");
-                Imgui.Text($"EncyclopediaWindow: {Mission.IsEncyclopediaWindowAccessAllowed}");
-                Imgui.Text($"BannerWindow: {Mission.IsBannerWindowAccessAllowed}");
+                BooleanField("Inventory", Mission.IsInventoryAccessAllowed);
+                BooleanField("CharacterWindow", Mission.IsCharacterWindowAccessAllowed);
+                BooleanField("QuestScreen", Mission.IsQuestScreenAccessAllowed);
+                BooleanField("PartyWindow", Mission.IsPartyWindowAccessAllowed);
+                BooleanField("KingdomWindow", Mission.IsKingdomWindowAccessAllowed);
+                BooleanField("ClanWindow", Mission.IsClanWindowAccessAllowed);
+                BooleanField("EncyclopediaWindow", Mission.IsEncyclopediaWindowAccessAllowed);
+                BooleanField("BannerWindow", Mission.IsBannerWindowAccessAllowed);
                 Imgui.NewLine();
             }
         );
+    }
+
+    private void BooleanField(string label, bool value)
+    {
+        Imgui.Text($"- {label}:");
+        Imgui.SameLine(0, 10);
+        if (value)
+        {
+            Imgui.Text("Enabled");
+        }
+        else
+        {
+            Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref GrayStyleColor);
+            Imgui.Text("Disabled");
+            Imgui.PopStyleColor();
+        }
     }
 }
