@@ -299,6 +299,7 @@
     <Compile Include="Hotkeys\HotKeyPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs"/>
     <Compile Include="SubModule.cs"/>
+    <Compile Include="Utilities\PatchDevelopmentMode.cs" />
     <Compile Include="Utilities\PatchUiAreaView.cs" />
   </ItemGroup>
   <ItemGroup>
