@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using HarmonyLib;
 using SandBox.View.Map;
@@ -210,7 +209,7 @@ public class MobilePartyDebugger : DebuggerWindow
         Imgui.NewLine();
     }
 
-    private static void PlayerPartyActions()
+    private void PlayerPartyActions()
     {
         Button(
             "Heal (Cheat)",
@@ -234,28 +233,33 @@ public class MobilePartyDebugger : DebuggerWindow
                     InformationManager.DisplayMessage(new InformationMessage("Cheat: " + result));
             }
         );
+        Imgui.SameLine(0, 10);
+        Button("Debug", () => Debug(MobileParty.MainParty), "Break into debugger (if attached)");
     }
 
-    private static void MobilePartyActions(MobileParty party)
+    private void MobilePartyActions(MobileParty party)
     {
         if (MobileParty.MainParty.CurrentSettlement == null)
         {
             Button("Teleport to party", () => TeleportParty(MobileParty.MainParty, party));
-            if (party.CurrentSettlement == null)
-            {
-                Imgui.SameLine(0, 10);
-                Button("Teleport to player", () => TeleportParty(party, MobileParty.MainParty));
-
-                Imgui.SameLine(0, 10);
-                Button(
-                    "Destroy",
-                    () =>
-                    {
-                        DestroyPartyAction.Apply(null, party);
-                    }
-                );
-            }
+            Imgui.SameLine(0, 10);
         }
+
+        if (party.CurrentSettlement == null)
+        {
+            Button("Teleport to player", () => TeleportParty(party, MobileParty.MainParty));
+            Imgui.SameLine(0, 10);
+            Button(
+                "Destroy",
+                () =>
+                {
+                    DestroyPartyAction.Apply(null, party);
+                }
+            );
+            Imgui.SameLine(0, 10);
+        }
+
+        Button("Debug", () => Debug(party), "Break into debugger (if attached)");
     }
 
     private static void TeleportParty(MobileParty teleporter, MobileParty target)
@@ -278,6 +282,14 @@ public class MobilePartyDebugger : DebuggerWindow
             settlement.Party.UpdateVisibilityAndInspected();
 
         MapScreen.Instance.TeleportCameraToMainParty();
+    }
+
+    private void Debug(MobileParty target)
+    {
+        var mobileParty = target;
+        var partyBase = target.Party;
+
+        Debugger.Break();
     }
 
     private void PartyCheckboxList(List<MobileParty> parties)
