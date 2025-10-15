@@ -11,6 +11,7 @@ public class AgentSelector : DebuggerWindow
     private static Mission Mission => Mission.Current;
 
     private bool _onlyShowHumans;
+    private Agent _lastHoveredAgent;
 
     protected override void Render()
     {
@@ -43,22 +44,40 @@ public class AgentSelector : DebuggerWindow
                 if (_onlyShowHumans && !agent.IsHuman)
                     continue;
 
-                Imgui.Text(agent.Name);
+                if (agent == _lastHoveredAgent)
+                {
+                    Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref PurpleStyleColor);
+                    Imgui.Text(agent.Name);
+                    Imgui.PopStyleColor();
+                }
+                else
+                    Imgui.Text(agent.Name);
+                var hovered = Imgui.IsItemHovered();
+                if (hovered)
+                {
+                    if (agent != _lastHoveredAgent)
+                    {
+                        _lastHoveredAgent?.AgentVisuals?.SetContourColor(null);
+                        _lastHoveredAgent = agent;
+
+                        var color = new TaleWorlds.Library.Color(
+                            0.5f,
+                            0.2f,
+                            1f
+                        ).ToUnsignedInteger();
+                        agent.AgentVisuals?.SetContourColor(color);
+                    }
+                }
+                else if (agent == _lastHoveredAgent)
+                {
+                    _lastHoveredAgent.AgentVisuals?.SetContourColor(null);
+                    _lastHoveredAgent = null;
+                }
                 Imgui.SameLine(0, 10);
                 SmallButton(
-                    $"Select##{agent.Index}",
+                    $"Open##{agent.Index}",
                     () => DebuggerWindows.AddWindow(new AgentDebugger(agent))
                 );
-
-                // SmallButton($"Select##{agent.()}", () => DebuggerWindows.AddWindow(new AgentDebugger(agent)));
-                // Imgui.SameLine(0, 10);
-                // SmallButton(
-                //     "Highlight",
-                //     () =>
-                //     {
-                //         Mission.HighlightedAgents = [agent];
-                //     }
-                // );
             }
 
             Imgui.TreePop();
