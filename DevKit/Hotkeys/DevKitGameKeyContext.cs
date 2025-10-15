@@ -43,6 +43,15 @@ public class DevKitGameKeyContext : GameKeyContext
                 nameof(DevKitGameKeyContext)
             )
         );
+        RegisterGameKey(
+            new GameKey(
+                (int)KeyMap.OpenAgentSelector,
+                "OpenAgentSelector",
+                nameof(DevKitGameKeyContext),
+                InputKey.F5,
+                nameof(DevKitGameKeyContext)
+            )
+        );
     }
 
     public enum KeyMap
@@ -51,5 +60,6 @@ public class DevKitGameKeyContext : GameKeyContext
         OpenMobilePartyDebugger = 141,
         OpenCampaignEventsDebugger = 142,
         OpenMissionDebugger = 143,
+        OpenAgentSelector = 144,
     }
 }

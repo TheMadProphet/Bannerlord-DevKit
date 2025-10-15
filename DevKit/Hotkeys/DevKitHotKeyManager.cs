@@ -49,6 +49,11 @@ public static class DevKitHotKeyManager
             "Toggle Mission Window",
             "Toggles the Mission Debugger Window"
         );
+        SetupHotkey(
+            DevKitGameKeyContext.KeyMap.OpenAgentSelector,
+            "Toggle Agent Selector Window",
+            "Toggles the Agent Selector Window, which allows you to inspect agents in the current mission"
+        );
     }
 
     private static void SetupHotkey(

@@ -15,12 +15,14 @@ public static class DebuggerWindows
     public static readonly DebuggerWindow MissionDebugger = new MissionDebugger();
     public static readonly DebuggerWindow CampaignEventsDebugger = new CampaignEventsDebugger();
     public static readonly DebuggerWindow MobilePartyDebugger = new MobilePartyDebugger();
+    public static readonly DebuggerWindow AgentSelector = new AgentSelector();
     private static readonly List<DebuggerWindow> Windows =
     [
         ControlPanel,
         MissionDebugger,
         CampaignEventsDebugger,
-        MobilePartyDebugger
+        MobilePartyDebugger,
+        AgentSelector
     ];
     private static readonly List<DebuggerWindow> WindowsToAdd = [];
     private static readonly List<DebuggerWindow> WindowsToRemove = [];
@@ -41,7 +43,10 @@ public static class DebuggerWindows
         if (WindowsToRemove.Count > 0)
         {
             foreach (var window in WindowsToRemove)
+            {
+                window.Dispose();
                 Windows.Remove(window);
+            }
             WindowsToRemove.Clear();
         }
     }
@@ -60,9 +65,6 @@ public static class DebuggerWindows
     {
         // Defer removal to avoid modifying Windows list during Tick() iteration
         WindowsToRemove.Add(window);
-
-        // Dispose window to clean up resources and prevent memory leaks
-        window.Dispose();
     }
 
     public static IEnumerable<T> GetAllWindows<T>()

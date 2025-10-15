@@ -16,6 +16,7 @@ public class SubModule : MBSubModuleBase
     private GameKey _openMobilePartyDebuggerKey;
     private GameKey _openCampaignEventsDebuggerKey;
     private GameKey _openMissionDebuggerKey;
+    private GameKey _openAgentSelectorKey;
 
     protected override void OnSubModuleLoad()
     {
@@ -25,10 +26,12 @@ public class SubModule : MBSubModuleBase
 
         DevKitHotKeyManager.Initialize();
         var devkitCategory = HotKeyManager.GetCategory(nameof(DevKitGameKeyContext));
+
         _openControlPanelKey = devkitCategory.GetGameKey("OpenControlPanel");
         _openMobilePartyDebuggerKey = devkitCategory.GetGameKey("OpenMobilePartyDebugger");
         _openCampaignEventsDebuggerKey = devkitCategory.GetGameKey("OpenCampaignEventsDebugger");
         _openMissionDebuggerKey = devkitCategory.GetGameKey("OpenMissionDebugger");
+        _openAgentSelectorKey = devkitCategory.GetGameKey("OpenAgentSelector");
     }
 
     protected override void OnApplicationTick(float dt)
@@ -59,6 +62,14 @@ public class SubModule : MBSubModuleBase
                 DebuggerWindows.AddWindow(new MissionDebugger());
             else
                 DebuggerWindows.MissionDebugger.Toggle();
+        }
+
+        if (Input.IsKeyPressed(_openAgentSelectorKey.KeyboardKey.InputKey))
+        {
+            if (isShiftDown)
+                DebuggerWindows.AddWindow(new AgentSelector());
+            else
+                DebuggerWindows.AgentSelector.Toggle();
         }
     }
 }
