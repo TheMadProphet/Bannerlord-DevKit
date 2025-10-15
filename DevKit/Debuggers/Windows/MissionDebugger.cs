@@ -48,6 +48,21 @@ public class MissionDebugger : DebuggerWindow
         Imgui.NewLine();
 
         Collapse(
+            "UI Window Access",
+            () =>
+            {
+                BooleanField("Inventory", Mission.IsInventoryAccessAllowed);
+                BooleanField("CharacterWindow", Mission.IsCharacterWindowAccessAllowed);
+                BooleanField("QuestScreen", Mission.IsQuestScreenAccessAllowed);
+                BooleanField("PartyWindow", Mission.IsPartyWindowAccessAllowed);
+                BooleanField("KingdomWindow", Mission.IsKingdomWindowAccessAllowed);
+                BooleanField("ClanWindow", Mission.IsClanWindowAccessAllowed);
+                BooleanField("EncyclopediaWindow", Mission.IsEncyclopediaWindowAccessAllowed);
+                BooleanField("BannerWindow", Mission.IsBannerWindowAccessAllowed);
+                Imgui.NewLine();
+            }
+        );
+        Collapse(
             "Mission Behaviors",
             () =>
             {
@@ -64,21 +79,6 @@ public class MissionDebugger : DebuggerWindow
                     }
                 }
 
-                Imgui.NewLine();
-            }
-        );
-        Collapse(
-            "UI Window Access",
-            () =>
-            {
-                BooleanField("Inventory", Mission.IsInventoryAccessAllowed);
-                BooleanField("CharacterWindow", Mission.IsCharacterWindowAccessAllowed);
-                BooleanField("QuestScreen", Mission.IsQuestScreenAccessAllowed);
-                BooleanField("PartyWindow", Mission.IsPartyWindowAccessAllowed);
-                BooleanField("KingdomWindow", Mission.IsKingdomWindowAccessAllowed);
-                BooleanField("ClanWindow", Mission.IsClanWindowAccessAllowed);
-                BooleanField("EncyclopediaWindow", Mission.IsEncyclopediaWindowAccessAllowed);
-                BooleanField("BannerWindow", Mission.IsBannerWindowAccessAllowed);
                 Imgui.NewLine();
             }
         );
