@@ -44,14 +44,7 @@ public class AgentSelector : DebuggerWindow
                 if (_onlyShowHumans && !agent.IsHuman)
                     continue;
 
-                if (agent == _lastHoveredAgent)
-                {
-                    Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref PurpleStyleColor);
-                    Imgui.Text(agent.Name);
-                    Imgui.PopStyleColor();
-                }
-                else
-                    Imgui.Text(agent.Name);
+                Text(agent.Name, agent == _lastHoveredAgent ? PurpleStyleColor : null);
                 var hovered = Imgui.IsItemHovered();
                 if (hovered)
                 {

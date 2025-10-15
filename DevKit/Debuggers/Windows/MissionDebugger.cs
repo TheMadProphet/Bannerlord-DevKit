@@ -116,16 +116,12 @@ public class MissionDebugger : DebuggerWindow
                     if (behavior is MissionLogic)
                     {
                         Imgui.SameLine(0, 10);
-                        Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref YellowStyleColor);
-                        Imgui.Text("(MissionLogic)");
-                        Imgui.PopStyleColor();
+                        Text("(MissionLogic)", YellowStyleColor);
                     }
                     else if (behavior is MissionView)
                     {
                         Imgui.SameLine(0, 10);
-                        Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref PurpleStyleColor);
-                        Imgui.Text("(MissionView)");
-                        Imgui.PopStyleColor();
+                        Text("(MissionView)", PurpleStyleColor);
                     }
                 }
 
@@ -138,15 +134,10 @@ public class MissionDebugger : DebuggerWindow
     {
         Imgui.Text($"- {label}:");
         Imgui.SameLine(0, 10);
+
         if (value)
-        {
-            Imgui.Text("Enabled");
-        }
+            Text("Enabled");
         else
-        {
-            Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref GrayStyleColor);
-            Imgui.Text("Disabled");
-            Imgui.PopStyleColor();
-        }
+            Text("Disabled", GrayStyleColor);
     }
 }

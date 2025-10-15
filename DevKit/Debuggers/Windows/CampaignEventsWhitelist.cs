@@ -46,10 +46,7 @@ public class CampaignEventsWhitelist : DebuggerWindow
         );
         Imgui.SameLine(0, 10);
         Imgui.Text($"({Whitelist.Count} / {_allEvents.Count})");
-
-        Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref GrayStyleColor);
-        Imgui.Text("Select which events to log.");
-        Imgui.PopStyleColor();
+        Text("Select which events to log.", GrayStyleColor);
 
         Imgui.NewLine();
 

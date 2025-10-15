@@ -48,10 +48,8 @@ public class CampaignEventsDebugger : DebuggerWindow
         Imgui.Checkbox("Args", ref _showArgs);
 
         // Description
-        Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref GrayStyleColor);
-        Imgui.Text("Displays events fired in the campaign. (Log limit: 100)");
-        Imgui.Text("Use the Whitelist button to select which events to log.");
-        Imgui.PopStyleColor();
+        Text("Displays events fired in the campaign. (Log limit: 100)", GrayStyleColor);
+        Text("Use the Whitelist button to select which events to log.", GrayStyleColor);
 
         Imgui.NewLine();
 
@@ -67,9 +65,7 @@ public class CampaignEventsDebugger : DebuggerWindow
                         Imgui.SameLine(0, 10);
                     }
 
-                    Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref YellowStyleColor);
-                    Imgui.Text($"{eventName}");
-                    Imgui.PopStyleColor();
+                    Text($"{eventName}", YellowStyleColor);
 
                     if (args != null && _showArgs)
                     {

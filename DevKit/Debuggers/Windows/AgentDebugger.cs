@@ -95,9 +95,7 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
                     if (prop.Name.Contains("Ai") || prop.Name.Contains("AI"))
                     {
                         Imgui.SameLine(0, 10);
-                        Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref PurpleStyleColor);
-                        Imgui.Text("(Ai)");
-                        Imgui.PopStyleColor();
+                        Text("(Ai)", PurpleStyleColor);
                     }
                 }
             }

@@ -63,9 +63,7 @@ public class MobilePartyDebugger : DebuggerWindow
             "SELECT PARTY ...",
             () =>
             {
-                Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref GrayStyleColor);
-                Imgui.Text("Select a party from the list below.");
-                Imgui.PopStyleColor();
+                Text("Select a party from the list below.", GrayStyleColor);
                 Imgui.NewLine();
 
                 Collapse(
@@ -338,9 +336,7 @@ public class MobilePartyDebugger : DebuggerWindow
 
         if (string.IsNullOrEmpty(value))
         {
-            Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref GrayStyleColor);
-            Imgui.Text("<None>");
-            Imgui.PopStyleColor();
+            Text("<None>", GrayStyleColor);
 
             return;
         }

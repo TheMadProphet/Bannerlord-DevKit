@@ -53,6 +53,20 @@ public abstract class DebuggerWindow : IDisposable
 
     #region Helpers
 
+    protected static void Text(string text, Vec3? color = null)
+    {
+        if (color.HasValue)
+        {
+            var localColor = color.Value;
+            Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref localColor);
+        }
+
+        Imgui.Text(text);
+
+        if (color.HasValue)
+            Imgui.PopStyleColor();
+    }
+
     protected static void Button(string label, Action onClick, string tooltip = "")
     {
         WithTooltip(
