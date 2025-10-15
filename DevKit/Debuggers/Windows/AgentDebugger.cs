@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.Engine;
@@ -17,6 +16,12 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
 
     protected override void Render()
     {
+        if (Mission.Current == null || Mission.Current.IsFinalized)
+        {
+            Imgui.Text("No active mission.");
+            return;
+        }
+
         Imgui.Text("Agent: " + agent.Name);
         if (agent.IsHero)
         {
@@ -60,8 +65,8 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
                 if (!_isHighlighted)
                 {
                     var focusedContourColor = new TaleWorlds.Library.Color(
-                        0.8f,
-                        0.4f,
+                        0.5f,
+                        0.2f,
                         1f
                     ).ToUnsignedInteger();
                     agent.AgentVisuals?.SetContourColor(focusedContourColor);
@@ -76,7 +81,7 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
         );
         Imgui.SameLine(0, 10);
         Button("Break", Break, "Break into the debugger (if attached)");
-        // Buttons: drop items, kill
+        // Buttons: drop items, kill, teleport to/from
 
         Collapse(
             "Agent Driven Properties",
@@ -132,4 +137,23 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
     {
         Debugger.Break();
     }
+
+    #region Cleanup
+
+    protected override void OnInitialize()
+    {
+        CampaignEvents.OnMissionEndedEvent.AddNonSerializedListener(this, OnMissionEnded);
+    }
+
+    private void OnMissionEnded(IMission mission)
+    {
+        DebuggerWindows.RemoveWindow(this);
+    }
+
+    protected override void OnDispose()
+    {
+        CampaignEvents.OnMissionEndedEvent.ClearListeners(this);
+    }
+
+    #endregion
 }

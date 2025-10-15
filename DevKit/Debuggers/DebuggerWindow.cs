@@ -17,7 +17,10 @@ public abstract class DebuggerWindow : IDisposable
     protected DebuggerWindow(int? id = null)
     {
         Id = id ?? DebuggerWindows.NextId;
+        OnInitialize();
     }
+
+    protected virtual void OnInitialize() { }
 
     public void Toggle()
     {
