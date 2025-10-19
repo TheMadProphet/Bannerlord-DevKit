@@ -39,7 +39,7 @@ public class AgentSelector : DebuggerWindow
 
         if (Imgui.TreeNode(label))
         {
-            foreach (var agent in agents)
+            foreach (var agent in agents.OrderBy(it => it.Name))
             {
                 if (_onlyShowHumans && !agent.IsHuman)
                     continue;
