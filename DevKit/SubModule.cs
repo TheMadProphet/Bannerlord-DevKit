@@ -22,7 +22,6 @@ public class SubModule : MBSubModuleBase
     {
         HarmonyInstance = new Harmony("mod.harmony.devkit");
         HarmonyInstance.PatchAll();
-        UIConfig.DoNotUseGeneratedPrefabs = true;
 
         DevKitHotKeyManager.Initialize();
         var devkitCategory = HotKeyManager.GetCategory(nameof(DevKitGameKeyContext));
