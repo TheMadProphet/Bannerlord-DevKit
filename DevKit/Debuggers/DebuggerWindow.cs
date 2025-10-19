@@ -87,6 +87,14 @@ public abstract class DebuggerWindow : IDisposable
             onClick();
     }
 
+    protected static string Dropdown(string label, string[] options, ref int selectedIndex)
+    {
+        var items = string.Join("\0", options) + "\0";
+        Imgui.Combo(label, ref selectedIndex, items);
+
+        return options.ElementAtOrDefault(selectedIndex) ?? "";
+    }
+
     protected bool DropdownButton(string label, bool open, Action content)
     {
         Imgui.Text(label);
