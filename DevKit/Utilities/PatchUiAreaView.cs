@@ -18,18 +18,14 @@ public class PatchUiAreaView
     {
         var traverse = Traverse.Create(__instance);
         var currentWidget = traverse.Field("_current").GetValue() as Widget;
-        if (currentWidget == null)
-        {
-            return;
-        }
-
-        var x = currentWidget.GlobalPosition.X;
-        var y = currentWidget.GlobalPosition.Y;
-        var num = currentWidget.GlobalPosition.X + currentWidget.Size.X;
-        var num2 = currentWidget.GlobalPosition.Y + currentWidget.Size.Y;
-        if (x == num || y == num2 || currentWidget.Size.X == 0f || currentWidget.Size.Y == 0f)
+        if (currentWidget == null || currentWidget.Size.X == 0f || currentWidget.Size.Y == 0f)
             return;
 
-        MBDebug.RenderDebugRectWithColor(x, y, num, num2, 0x2AFF00FF);
+        var left = currentWidget.GlobalPosition.X;
+        var bottom = currentWidget.GlobalPosition.Y;
+        var right = currentWidget.GlobalPosition.X + currentWidget.Size.X;
+        var top = currentWidget.GlobalPosition.Y + currentWidget.Size.Y;
+
+        MBDebug.RenderDebugRectWithColor(left, bottom, right, top, 0x2AFF00FF);
     }
 }
