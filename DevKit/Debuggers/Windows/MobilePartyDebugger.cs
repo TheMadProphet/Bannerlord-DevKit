@@ -157,17 +157,7 @@ public class MobilePartyDebugger : DebuggerWindow
 
         Imgui.NewLine();
 
-        Collapse(
-            "Ai Behavior",
-            () =>
-            {
-                Imgui.Text($"DefaultBehavior: {party.Ai.DefaultBehavior}");
-                Imgui.Text($"PartyMoveMode: {party.Ai.PartyMoveMode}");
-                Imgui.Text($"IsAlerted: {party.Ai.IsAlerted}");
-                Imgui.Text($"DoNotMakeNewDecisions: {party.Ai.DoNotMakeNewDecisions}");
-                Imgui.NewLine();
-            }
-        );
+        AiBehaviorFor(party);
 
         Collapse(
             "Roles",
@@ -205,6 +195,37 @@ public class MobilePartyDebugger : DebuggerWindow
         );
 
         Imgui.NewLine();
+    }
+
+    private void AiBehaviorFor(MobileParty party)
+    {
+        Collapse(
+            "Ai Behavior",
+            () =>
+            {
+                var partyAi = party.Ai;
+
+                Imgui.Text("General");
+                Imgui.Separator();
+                Imgui.Text($"DefaultBehavior: {partyAi.DefaultBehavior}");
+                Imgui.Text($"PartyMoveMode: {partyAi.PartyMoveMode}");
+                Imgui.Text($"DoNotMakeNewDecisions: {partyAi.DoNotMakeNewDecisions}");
+
+                Imgui.NewLine();
+
+                Imgui.Text("Short Term");
+                Imgui.Separator();
+                Imgui.Text($"Behavior: {party.ShortTermBehavior}");
+                var target = "<None>";
+                if (party.ShortTermTargetParty != null)
+                    target = party.ShortTermTargetParty.Name.ToString();
+                else if (party.ShortTermTargetSettlement != null)
+                    target = party.ShortTermTargetSettlement.Name.ToString();
+                Text($"Target: {target}", target == "<None>" ? GrayStyleColor : null);
+
+                Imgui.NewLine();
+            }
+        );
     }
 
     private void PlayerPartyActions()
