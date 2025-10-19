@@ -123,6 +123,7 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
     {
         Imgui.Text("Channel: " + channelId);
         Imgui.NewLine();
+        Imgui.Text("Action: " + agent.GetCurrentActionValue(channelId).Name);
         Imgui.Text("Priority: " + agent.GetCurrentActionPriority(channelId));
         Imgui.Text("Type: " + agent.GetCurrentActionType(channelId));
         Imgui.Text("Stage: " + agent.GetCurrentActionStage(channelId));
