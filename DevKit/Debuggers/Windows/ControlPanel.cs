@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using TaleWorlds.Engine;
@@ -30,6 +29,7 @@ public class ControlPanel : DebuggerWindow
         Imgui.Text("Mission Windows");
         Imgui.Separator();
         WindowButton<MissionDebugger>("Mission Debugger", DebuggerWindows.MissionDebugger);
+        WindowButton<MissionDebugger>("Agent Selector", DebuggerWindows.AgentSelector);
 
         Imgui.NewLine();
 
