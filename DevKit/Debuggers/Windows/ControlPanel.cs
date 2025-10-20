@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using DevKit.Configuration;
 using TaleWorlds.Engine;
 using TaleWorlds.Library;
 using TaleWorlds.ModuleManager;
@@ -42,6 +43,19 @@ public class ControlPanel : DebuggerWindow
         );
         Imgui.SameLine(0, 10);
         Button("Print Modules", PrintMods, "Prints all loaded submodules.");
+
+        Imgui.NewLine();
+        Collapse(
+            "Kit Config",
+            () =>
+            {
+                ConfigCheckbox(
+                    "Enable Development Mode (by TW)",
+                    ref DevKitConfig.EnableDevelopmentMode
+                );
+                ConfigCheckbox("Enable UI Area patch", ref DevKitConfig.EnableUiAreaPatch);
+            }
+        );
     }
 
     private void WindowButton<T>(string label, DebuggerWindow mainWindow)

@@ -1,3 +1,4 @@
+using DevKit.Configuration;
 using DevKit.Debuggers;
 using DevKit.Debuggers.Windows;
 using DevKit.Hotkeys;
@@ -20,6 +21,8 @@ public class SubModule : MBSubModuleBase
 
     protected override void OnSubModuleLoad()
     {
+        DevKitConfigIO.Load();
+
         HarmonyInstance = new Harmony("mod.harmony.devkit");
         HarmonyInstance.PatchAll();
 

@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using DevKit.Configuration;
 using HarmonyLib;
 using TaleWorlds.Engine;
 using TaleWorlds.GauntletUI.BaseTypes;
@@ -16,6 +17,9 @@ public class PatchUiAreaView
 
     static void Prefix(object __instance)
     {
+        if (!DevKitConfig.EnableUiAreaPatch)
+            return;
+
         var traverse = Traverse.Create(__instance);
         var currentWidget = traverse.Field("_current").GetValue() as Widget;
         if (currentWidget == null || currentWidget.Size.X == 0f || currentWidget.Size.Y == 0f)

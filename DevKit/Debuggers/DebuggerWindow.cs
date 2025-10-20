@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using DevKit.Configuration;
 using TaleWorlds.Engine;
 using TaleWorlds.Library;
 
@@ -115,7 +116,7 @@ public abstract class DebuggerWindow : IDisposable
             content();
     }
 
-    protected static void StyledCheckbox(string label, ref bool value)
+    protected static void StyledCheckbox(string label, ref bool value, string tooltip = "")
     {
         if (value)
             Imgui.Checkbox(label, ref value);
@@ -124,7 +125,17 @@ public abstract class DebuggerWindow : IDisposable
             Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref GrayStyleColor);
             Imgui.Checkbox(label, ref value);
             Imgui.PopStyleColor();
+            if (Imgui.IsItemHovered() && !string.IsNullOrEmpty(tooltip))
+                Imgui.SetTooltip(tooltip);
         }
+    }
+
+    protected static void ConfigCheckbox(string label, ref bool configValue, string tooltip = "")
+    {
+        var oldValue = configValue;
+        StyledCheckbox(label, ref configValue, tooltip);
+        if (oldValue != configValue)
+            DevKitConfigIO.Save();
     }
 
     protected static void WithTooltip(Action content, string tooltip = "")
