@@ -125,9 +125,10 @@ public abstract class DebuggerWindow : IDisposable
             Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref GrayStyleColor);
             Imgui.Checkbox(label, ref value);
             Imgui.PopStyleColor();
-            if (Imgui.IsItemHovered() && !string.IsNullOrEmpty(tooltip))
-                Imgui.SetTooltip(tooltip);
         }
+
+        if (Imgui.IsItemHovered() && !string.IsNullOrEmpty(tooltip))
+            Imgui.SetTooltip(tooltip);
     }
 
     protected static void ConfigCheckbox(string label, ref bool configValue, string tooltip = "")

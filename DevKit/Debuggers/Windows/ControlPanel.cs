@@ -50,10 +50,15 @@ public class ControlPanel : DebuggerWindow
             () =>
             {
                 ConfigCheckbox(
-                    "Enable Development Mode (by TW)",
-                    ref DevKitConfig.EnableDevelopmentMode
+                    "Enable Development Mode",
+                    ref DevKitConfig.EnableDevelopmentMode,
+                    "Enables development mode, used by TaleWorlds internally"
                 );
-                ConfigCheckbox("Enable UI Area patch", ref DevKitConfig.EnableUiAreaPatch);
+                ConfigCheckbox(
+                    "Enable UI Area patch",
+                    ref DevKitConfig.EnableUiAreaPatch,
+                    "Fixes UI not being highlighted in menu: ui.set_screen_debug_information_enabled"
+                );
             }
         );
     }
