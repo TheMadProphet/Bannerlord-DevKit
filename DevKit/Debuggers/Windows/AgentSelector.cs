@@ -67,6 +67,7 @@ public class AgentSelector : DebuggerWindow
                     _lastHoveredAgent = null;
                 }
                 Imgui.SameLine(0, 10);
+                // TODO: two options: open in new window, or modify main agent window (e.g. "Select" and "+" buttons)
                 SmallButton(
                     $"Open##{agent.Index}",
                     () => DebuggerWindows.AddWindow(new AgentDebugger(agent))
