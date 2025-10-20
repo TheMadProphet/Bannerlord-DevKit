@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using TaleWorlds.MountAndBlade;
 
-namespace DevKit.Utilities;
+namespace DevKit.Patches;
 
 [HarmonyPatch]
 public class PatchDevelopmentMode

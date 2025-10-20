@@ -3,7 +3,7 @@ using HarmonyLib;
 using TaleWorlds.Engine;
 using TaleWorlds.GauntletUI.BaseTypes;
 
-namespace DevKit.Utilities;
+namespace DevKit.Patches;
 
 [HarmonyPatch]
 public class PatchUiAreaView
