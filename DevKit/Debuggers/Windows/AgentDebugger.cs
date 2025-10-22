@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.Engine;
@@ -12,6 +13,7 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
     public override string Name => $"DevKit | Agent | {agent.Name}";
 
     private bool _stateIsOpen;
+    private bool _flagsIsOpen;
     private bool _isHighlighted;
 
     protected override void Render()
@@ -61,6 +63,21 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
                 Imgui.Separator();
             }
         );
+        // TODO: Improve. Move to collapse, list as checkboxes
+        _flagsIsOpen = DropdownButton(
+            "Flags",
+            _flagsIsOpen,
+            () =>
+            {
+                var flags = agent.GetAgentFlags().ToString().Split([", "], StringSplitOptions.None);
+                for (var i = 0; i < flags.Length; i += 4)
+                {
+                    var lineFlags = flags.Skip(i).Take(4);
+                    Text(string.Join(", ", lineFlags));
+                }
+                Imgui.Separator();
+            }
+        );
         Imgui.Text(agent.Team?.ToString() ?? "No Team");
 
         Imgui.NewLine();
@@ -87,7 +104,9 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
         );
         Imgui.SameLine(0, 10);
         Button("Break", Break, "Break into the debugger (if attached)");
-        // Buttons: drop items, kill, teleport to/from
+        Button("Toggle invulnerable", agent.ToggleInvulnerable);
+        // Buttons: drop items, kill, teleport to/from (TeleportToPosition), ToggleInvulnerable()
+        Imgui.NewLine();
 
         Collapse(
             "Agent Driven Properties",
@@ -106,6 +125,7 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
                 }
             }
         );
+
         Collapse(
             "Action",
             () =>
@@ -118,11 +138,33 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
             }
         );
 
+        Collapse("AI", RenderAiInfo);
+
         // Other ideas:
         // Equipment
         // EventControlFlags
         // Formation
         // monster
+    }
+
+    private void RenderAiInfo()
+    {
+        // agent.IsAIControlled;
+        // agent.SetAIBehaviorParams();
+        // agent.SetAIBehaviorValues();
+        // agent.MovementFlags;
+        // agent.GetDefendMovementFlag();  // Where its supposed to auto block (?)
+        // agent.GetMovementDirection();
+        // agent.MovementLockedState;
+        // agent.InvalidateTargetAgent();
+        // agent.SetAgentFlags();
+        // agent.SetAttackState();
+        // agent.SetLookAgent();
+        // Agent component list
+
+        Button(agent.IsPaused ? "Unpause" : "Pause", () => agent.SetIsAIPaused(!agent.IsPaused));
+        Text("Movement flags: " + agent.MovementFlags);
+        Text("AttackDirection: " + agent.AttackDirection);
     }
 
     private void RenderActionInfo(int channelId)

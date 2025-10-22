@@ -36,7 +36,17 @@ public abstract class DebuggerWindow : IDisposable
         Imgui.BeginMainThreadScope();
         Imgui.Begin($"{Name}##{Id}", ref IsOpen);
 
-        Render();
+        try
+        {
+            Render();
+        }
+        catch (Exception e)
+        {
+            InformationManager.DisplayMessage(
+                new InformationMessage($"Error occurred while rendering {Name}: " + e)
+            );
+            DebuggerWindows.RemoveWindow(this);
+        }
 
         Imgui.End();
         Imgui.EndMainThreadScope();
