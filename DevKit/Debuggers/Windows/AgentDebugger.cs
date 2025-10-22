@@ -138,33 +138,29 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
             }
         );
 
-        Collapse("AI", RenderAiInfo);
+        if (agent.IsAIControlled)
+            Collapse("AI", RenderAiInfo);
 
         // Other ideas:
         // Equipment
         // EventControlFlags
         // Formation
         // monster
+        // Agent component list
+        // agent scripted stuff
     }
 
     private void RenderAiInfo()
     {
-        // agent.IsAIControlled;
         // agent.SetAIBehaviorParams();
         // agent.SetAIBehaviorValues();
-        // agent.MovementFlags;
         // agent.GetDefendMovementFlag();  // Where its supposed to auto block (?)
         // agent.GetMovementDirection();
-        // agent.MovementLockedState;
         // agent.InvalidateTargetAgent();
-        // agent.SetAgentFlags();
-        // agent.SetAttackState();
         // agent.SetLookAgent();
-        // Agent component list
 
         Button(agent.IsPaused ? "Unpause" : "Pause", () => agent.SetIsAIPaused(!agent.IsPaused));
-        Text("Movement flags: " + agent.MovementFlags);
-        Text("AttackDirection: " + agent.AttackDirection);
+        Text("State: " + agent.AIStateFlags);
     }
 
     private void RenderActionInfo(int channelId)
