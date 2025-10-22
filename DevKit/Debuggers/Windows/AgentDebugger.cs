@@ -22,6 +22,12 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
             return;
         }
 
+        if (!agent.IsActive())
+        {
+            Imgui.Text("Missing agent.");
+            return;
+        }
+
         Imgui.Text("Agent: " + agent.Name);
         if (agent.IsHero)
         {
@@ -136,23 +142,4 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
     {
         Debugger.Break();
     }
-
-    #region Cleanup
-
-    protected override void OnInitialize()
-    {
-        CampaignEvents.OnMissionEndedEvent.AddNonSerializedListener(this, OnMissionEnded);
-    }
-
-    private void OnMissionEnded(IMission mission)
-    {
-        DebuggerWindows.RemoveWindow(this);
-    }
-
-    protected override void OnDispose()
-    {
-        CampaignEvents.OnMissionEndedEvent.ClearListeners(this);
-    }
-
-    #endregion
 }

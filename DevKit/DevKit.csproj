@@ -298,6 +298,7 @@
     <Compile Include="Debuggers\Windows\MissionDebugger.cs" />
     <Compile Include="Debuggers\Windows\MobilePartyDebugger.cs" />
     <Compile Include="Debuggers\Windows\ControlPanel.cs" />
+    <Compile Include="DebuggerWindowMissionLogic.cs" />
     <Compile Include="Hotkeys\DevKitGameKeyContext.cs" />
     <Compile Include="Hotkeys\DevKitHotKeyManager.cs" />
     <Compile Include="Hotkeys\HotKeyPatch.cs" />

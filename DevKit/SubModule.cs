@@ -74,4 +74,9 @@ public class SubModule : MBSubModuleBase
                 DebuggerWindows.AgentSelector.Toggle();
         }
     }
+
+    public override void OnMissionBehaviorInitialize(Mission mission)
+    {
+        mission.AddMissionBehavior(new DebuggerWindowMissionLogic());
+    }
 }
