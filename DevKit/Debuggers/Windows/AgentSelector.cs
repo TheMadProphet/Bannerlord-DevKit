@@ -37,44 +37,40 @@ public class AgentSelector : DebuggerWindow
         if (agents == null || agents.Count == 0)
             return;
 
-        if (Imgui.TreeNode(label))
+        if (!Imgui.TreeNode(label))
+            return;
+
+        foreach (var agent in agents.OrderBy(it => it.Name))
         {
-            foreach (var agent in agents.OrderBy(it => it.Name))
+            if (_onlyShowHumans && !agent.IsHuman)
+                continue;
+
+            Text(agent.Name, agent == _lastHoveredAgent ? PurpleStyleColor : null);
+            var hovered = Imgui.IsItemHovered();
+            if (hovered)
             {
-                if (_onlyShowHumans && !agent.IsHuman)
-                    continue;
-
-                Text(agent.Name, agent == _lastHoveredAgent ? PurpleStyleColor : null);
-                var hovered = Imgui.IsItemHovered();
-                if (hovered)
+                if (agent != _lastHoveredAgent)
                 {
-                    if (agent != _lastHoveredAgent)
-                    {
-                        _lastHoveredAgent?.AgentVisuals?.SetContourColor(null);
-                        _lastHoveredAgent = agent;
+                    _lastHoveredAgent?.AgentVisuals?.SetContourColor(null);
+                    _lastHoveredAgent = agent;
 
-                        var color = new TaleWorlds.Library.Color(
-                            0.5f,
-                            0.2f,
-                            1f
-                        ).ToUnsignedInteger();
-                        agent.AgentVisuals?.SetContourColor(color);
-                    }
+                    var color = new TaleWorlds.Library.Color(0.5f, 0.2f, 1f).ToUnsignedInteger();
+                    agent.AgentVisuals?.SetContourColor(color);
                 }
-                else if (agent == _lastHoveredAgent)
-                {
-                    _lastHoveredAgent.AgentVisuals?.SetContourColor(null);
-                    _lastHoveredAgent = null;
-                }
-                Imgui.SameLine(0, 10);
-                // TODO: two options: open in new window, or modify main agent window (e.g. "Select" and "+" buttons)
-                SmallButton(
-                    $"Open##{agent.Index}",
-                    () => WindowManager.AddWindow(new AgentDebugger(agent))
-                );
             }
-
-            Imgui.TreePop();
+            else if (agent == _lastHoveredAgent)
+            {
+                _lastHoveredAgent.AgentVisuals?.SetContourColor(null);
+                _lastHoveredAgent = null;
+            }
+            Imgui.SameLine(0, 10);
+            // TODO: two options: open in new window, or modify main agent window (e.g. "Select" and "+" buttons)
+            SmallButton(
+                $"Open##{agent.Index}",
+                () => WindowManager.AddWindow(new AgentDebugger(agent))
+            );
         }
+
+        Imgui.TreePop();
     }
 }
