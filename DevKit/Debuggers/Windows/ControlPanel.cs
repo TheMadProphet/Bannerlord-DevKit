@@ -14,6 +14,24 @@ public class ControlPanel : DebuggerWindow
 
     protected override void Render()
     {
+        Collapse(
+            "Kit Config",
+            () =>
+            {
+                ConfigCheckbox(
+                    "Enable Development Mode",
+                    ref DevKitConfig.EnableDevelopmentMode,
+                    "Enables development mode, used internally by TaleWorlds"
+                );
+                ConfigCheckbox(
+                    "Enable UI Area patch",
+                    ref DevKitConfig.EnableUiAreaPatch,
+                    "Fixes highlight not working in menu: ui.set_screen_debug_information_enabled"
+                );
+            }
+        );
+        Imgui.NewLine();
+
         Imgui.Text("Campaign Windows");
         Imgui.Separator();
         WindowButton<CampaignEventsDebugger>(
@@ -39,28 +57,10 @@ public class ControlPanel : DebuggerWindow
         Button(
             "Debugger.Break()",
             Break,
-            "Break into the debugger (if attached) to evaluate custom code / game state."
+            "Break into the debugger (if attached) to evaluate custom code / game state"
         );
         Imgui.SameLine(0, 10);
-        Button("Print Modules", PrintMods, "Prints all loaded submodules.");
-
-        Imgui.NewLine();
-        Collapse(
-            "Kit Config",
-            () =>
-            {
-                ConfigCheckbox(
-                    "Enable Development Mode",
-                    ref DevKitConfig.EnableDevelopmentMode,
-                    "Enables development mode, used by TaleWorlds internally"
-                );
-                ConfigCheckbox(
-                    "Enable UI Area patch",
-                    ref DevKitConfig.EnableUiAreaPatch,
-                    "Fixes UI not being highlighted in menu: ui.set_screen_debug_information_enabled"
-                );
-            }
-        );
+        Button("Print Modules", PrintMods, "Prints all loaded submodules in order");
     }
 
     private void WindowButton<T>(string label, DebuggerWindow mainWindow)
