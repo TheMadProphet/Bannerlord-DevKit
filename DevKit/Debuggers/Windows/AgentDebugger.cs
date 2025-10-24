@@ -103,8 +103,9 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
             }
         );
         Imgui.SameLine(0, 10);
-        Button("Break", Break, "Break into the debugger (if attached)");
         Button("Toggle invulnerable", agent.ToggleInvulnerable);
+        Imgui.SameLine(0, 10);
+        Button("Break", Break, "Break into the debugger (if attached)");
         // Buttons: drop items, kill, teleport to/from (TeleportToPosition), ToggleInvulnerable()
         Imgui.NewLine();
 

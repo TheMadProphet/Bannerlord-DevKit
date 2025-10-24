@@ -327,8 +327,8 @@ public class MobilePartyDebugger : DebuggerWindow
         Imgui.Checkbox(partyLabel, ref isSelected);
         if (isSelected)
             _mobileParty = party;
-        else if (_mobileParty == party)
-            _mobileParty = null;
+        // else if (_mobileParty == party)
+        //     _mobileParty = null;
     }
 
     private static Vec3 UnpackColor(uint color)

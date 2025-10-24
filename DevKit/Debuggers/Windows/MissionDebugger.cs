@@ -123,6 +123,11 @@ public class MissionDebugger : DebuggerWindow
                         Imgui.SameLine(0, 10);
                         Text("(MissionView)", PurpleStyleColor);
                     }
+                    else
+                    {
+                        Imgui.SameLine(0, 10);
+                        Text($"({behavior.GetType().Name})", GrayStyleColor);
+                    }
                 }
 
                 Imgui.NewLine();
