@@ -406,7 +406,7 @@ public class MobilePartyHoverPatch
 {
     public static void Postfix(MobileParty __instance)
     {
-        var debuggers = DebuggerWindows.GetAllWindows<MobilePartyDebugger>();
+        var debuggers = WindowManager.GetAllWindows<MobilePartyDebugger>();
         foreach (var debugger in debuggers)
         {
             debugger.OnPartyHover(__instance);

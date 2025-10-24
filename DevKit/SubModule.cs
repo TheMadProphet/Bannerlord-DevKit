@@ -40,38 +40,38 @@ public class SubModule : MBSubModuleBase
     {
         var isShiftDown = Input.IsKeyDown(InputKey.LeftShift);
         if (Input.IsKeyPressed(_openControlPanelKey.KeyboardKey.InputKey))
-            DebuggerWindows.ControlPanel.Toggle();
+            WindowManager.ControlPanel.Toggle();
 
         if (Input.IsKeyPressed(_openMobilePartyDebuggerKey.KeyboardKey.InputKey))
         {
             if (isShiftDown)
-                DebuggerWindows.AddWindow(new MobilePartyDebugger());
+                WindowManager.AddWindow(new MobilePartyDebugger());
             else
-                DebuggerWindows.MobilePartyDebugger.Toggle();
+                WindowManager.MobilePartyDebugger.Toggle();
         }
 
         if (Input.IsKeyPressed(_openCampaignEventsDebuggerKey.KeyboardKey.InputKey))
         {
             if (isShiftDown)
-                DebuggerWindows.AddWindow(new CampaignEventsDebugger());
+                WindowManager.AddWindow(new CampaignEventsDebugger());
             else
-                DebuggerWindows.CampaignEventsDebugger.Toggle();
+                WindowManager.CampaignEventsDebugger.Toggle();
         }
 
         if (Input.IsKeyPressed(_openMissionDebuggerKey.KeyboardKey.InputKey))
         {
             if (isShiftDown)
-                DebuggerWindows.AddWindow(new MissionDebugger());
+                WindowManager.AddWindow(new MissionDebugger());
             else
-                DebuggerWindows.MissionDebugger.Toggle();
+                WindowManager.MissionDebugger.Toggle();
         }
 
         if (Input.IsKeyPressed(_openAgentSelectorKey.KeyboardKey.InputKey))
         {
             if (isShiftDown)
-                DebuggerWindows.AddWindow(new AgentSelector());
+                WindowManager.AddWindow(new AgentSelector());
             else
-                DebuggerWindows.AgentSelector.Toggle();
+                WindowManager.AgentSelector.Toggle();
         }
     }
 

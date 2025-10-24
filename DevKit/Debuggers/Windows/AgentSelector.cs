@@ -70,7 +70,7 @@ public class AgentSelector : DebuggerWindow
                 // TODO: two options: open in new window, or modify main agent window (e.g. "Select" and "+" buttons)
                 SmallButton(
                     $"Open##{agent.Index}",
-                    () => DebuggerWindows.AddWindow(new AgentDebugger(agent))
+                    () => WindowManager.AddWindow(new AgentDebugger(agent))
                 );
             }
 

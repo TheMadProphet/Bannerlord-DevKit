@@ -17,7 +17,7 @@ public abstract class DebuggerWindow : IDisposable
 
     protected DebuggerWindow(int? id = null)
     {
-        Id = id ?? DebuggerWindows.NextId;
+        Id = id ?? WindowManager.NextId;
         OnInitialize();
     }
 
@@ -45,7 +45,7 @@ public abstract class DebuggerWindow : IDisposable
             InformationManager.DisplayMessage(
                 new InformationMessage($"Error occurred while rendering {Name}: " + e)
             );
-            DebuggerWindows.RemoveWindow(this);
+            WindowManager.RemoveWindow(this);
         }
 
         Imgui.End();

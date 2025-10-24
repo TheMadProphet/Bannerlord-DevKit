@@ -8,9 +8,9 @@ public class DebuggerWindowMissionLogic : MissionLogic
 {
     protected override void OnEndMission()
     {
-        foreach (var agentDebugger in DebuggerWindows.GetAllWindows<AgentDebugger>())
+        foreach (var agentDebugger in WindowManager.GetAllWindows<AgentDebugger>())
         {
-            DebuggerWindows.RemoveWindow(agentDebugger);
+            WindowManager.RemoveWindow(agentDebugger);
         }
     }
 }

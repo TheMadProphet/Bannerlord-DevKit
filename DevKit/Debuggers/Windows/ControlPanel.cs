@@ -18,19 +18,19 @@ public class ControlPanel : DebuggerWindow
         Imgui.Separator();
         WindowButton<CampaignEventsDebugger>(
             "Campaign Events",
-            DebuggerWindows.CampaignEventsDebugger
+            WindowManager.CampaignEventsDebugger
         );
         WindowButton<MobilePartyDebugger>(
             "Mobile Party Debugger",
-            DebuggerWindows.MobilePartyDebugger
+            WindowManager.MobilePartyDebugger
         );
 
         Imgui.NewLine();
 
         Imgui.Text("Mission Windows");
         Imgui.Separator();
-        WindowButton<MissionDebugger>("Mission Debugger", DebuggerWindows.MissionDebugger);
-        WindowButton<MissionDebugger>("Agent Selector", DebuggerWindows.AgentSelector);
+        WindowButton<MissionDebugger>("Mission Debugger", WindowManager.MissionDebugger);
+        WindowButton<MissionDebugger>("Agent Selector", WindowManager.AgentSelector);
 
         Imgui.NewLine();
 
@@ -73,12 +73,12 @@ public class ControlPanel : DebuggerWindow
             () =>
             {
                 var newWindow = new T();
-                DebuggerWindows.AddWindow(newWindow);
+                WindowManager.AddWindow(newWindow);
             },
             $"Open additional \"{label}\""
         );
 
-        var openWindows = DebuggerWindows.GetAllWindows<T>().Where(it => it.IsOpen).ToList();
+        var openWindows = WindowManager.GetAllWindows<T>().Where(it => it.IsOpen).ToList();
         if (openWindows.Count > 1)
         {
             Imgui.SameLine(0, 5);
@@ -89,7 +89,7 @@ public class ControlPanel : DebuggerWindow
                     foreach (var win in openWindows)
                     {
                         if (win != mainWindow)
-                            DebuggerWindows.RemoveWindow(win);
+                            WindowManager.RemoveWindow(win);
                         else
                             win.IsOpen = false;
                     }
@@ -124,8 +124,8 @@ public class ControlPanel : DebuggerWindow
     [CommandLineFunctionality.CommandLineArgumentFunction("control_panel", "devkit")]
     public static string ToggleWindow(List<string> args)
     {
-        DebuggerWindows.ControlPanel.Toggle();
+        WindowManager.ControlPanel.Toggle();
 
-        return $"Toggled {DebuggerWindows.ControlPanel.Name} window.";
+        return $"Toggled {WindowManager.ControlPanel.Name} window.";
     }
 }

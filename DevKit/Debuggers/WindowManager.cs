@@ -6,7 +6,7 @@ using TaleWorlds.ScreenSystem;
 namespace DevKit.Debuggers;
 
 [HarmonyPatch]
-public static class DebuggerWindows
+public static class WindowManager
 {
     private static int _nextId = 1;
     public static int NextId => _nextId++;
