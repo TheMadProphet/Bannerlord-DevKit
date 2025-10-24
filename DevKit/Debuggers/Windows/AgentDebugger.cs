@@ -106,7 +106,16 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
         Button("Toggle invulnerable", agent.ToggleInvulnerable);
         Imgui.SameLine(0, 10);
         Button("Break", Break, "Break into the debugger (if attached)");
-        // Buttons: drop items, kill, teleport to/from (TeleportToPosition), ToggleInvulnerable()
+        Button(
+            "Teleport to agent",
+            () => Mission.Current.MainAgent?.TeleportToPosition(agent.Position)
+        );
+        Imgui.SameLine(0, 10);
+        Button(
+            "Teleport to player",
+            () => agent.TeleportToPosition(Mission.Current.MainAgent.Position)
+        );
+        // Buttons: drop items, kill
         Imgui.NewLine();
 
         Collapse(

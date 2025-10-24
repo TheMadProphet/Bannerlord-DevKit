@@ -24,7 +24,7 @@ public class AgentSelector : DebuggerWindow
         Imgui.Checkbox("Only Show Humans", ref _onlyShowHumans);
         Imgui.Separator();
 
-        var agentsWithNoTeam = Mission.AllAgents.Where(it => it.Team == null).ToList();
+        var agentsWithNoTeam = Mission.Agents.Where(it => it.Team == null).ToList();
         ListAgents("AttackerTeam", Mission.AttackerTeam?.ActiveAgents);
         ListAgents("AttackerAllyTeam", Mission.AttackerAllyTeam?.ActiveAgents);
         ListAgents("DefenderTeam", Mission.DefenderTeam?.ActiveAgents);
