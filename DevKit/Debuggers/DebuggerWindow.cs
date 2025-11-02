@@ -43,7 +43,10 @@ public abstract class DebuggerWindow : IDisposable
         catch (Exception e)
         {
             InformationManager.DisplayMessage(
-                new InformationMessage($"Error occurred while rendering {Name}: " + e)
+                new InformationMessage(
+                    $"Error occurred while running window {Name}: " + e,
+                    Colors.Red
+                )
             );
             WindowManager.RemoveWindow(this);
         }
