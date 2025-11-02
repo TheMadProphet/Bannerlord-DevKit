@@ -18,7 +18,8 @@ time.
 - 🧩 **Debug windows** for different systems
 - 🪶 **Entity inspectors** (parties, missions, agents, etc.)
 - 🧰 **Custom utility buttons and actions** for faster testing
-- 🔧 **Fixed Debug UI's "Show area"** - Accessed via `ui.set_screen_debug_information_enabled True`
+- 🔧 **Enable TaleWorld's development mode**
+- 🔧 **Fixed Debug UI's "Show area"**
 
 ---
 
@@ -43,7 +44,7 @@ time.
 
 ---
 
-## Previews
+## Previews (outdated)
 
 <details>
 <summary>Mobile Party Debugger <code>(F2)</code></summary>
