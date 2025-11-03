@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using DevKit.Debuggers.Utils;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.Engine;
@@ -81,27 +83,7 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
         Imgui.Text(agent.Team?.ToString() ?? "No Team");
 
         Imgui.NewLine();
-        Button(
-            "Highlight",
-            () =>
-            {
-                if (!_isHighlighted)
-                {
-                    var focusedContourColor = new TaleWorlds.Library.Color(
-                        0.5f,
-                        0.2f,
-                        1f
-                    ).ToUnsignedInteger();
-                    agent.AgentVisuals?.SetContourColor(focusedContourColor);
-                }
-                else
-                {
-                    agent.AgentVisuals?.SetContourColor(null);
-                }
-
-                _isHighlighted = !_isHighlighted;
-            }
-        );
+        Button("Highlight", agent.HighlightAgent);
         Imgui.SameLine(0, 10);
         Button("Toggle invulnerable", agent.ToggleInvulnerable);
         Imgui.SameLine(0, 10);
@@ -148,6 +130,8 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
             }
         );
 
+        DisplayAgentComponents();
+
         if (agent.IsAIControlled)
             Collapse("AI", RenderAiInfo);
 
@@ -158,6 +142,36 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
         // monster
         // Agent component list
         // agent scripted stuff
+    }
+
+    private static WorldPosition _position;
+
+    private void DisplayAgentComponents()
+    {
+        Collapse(
+            "Components",
+            () =>
+            {
+                var toRemove = new List<AgentComponent>();
+                foreach (var component in agent.Components)
+                {
+                    var name = component.GetType().Name;
+
+                    Imgui.Text($"- {name}");
+                    Imgui.SameLine(0, 10);
+                    SmallButton(
+                        $"Remove##{name}",
+                        () =>
+                        {
+                            toRemove.Add(component);
+                        }
+                    );
+                }
+
+                foreach (var comp in toRemove)
+                    agent.RemoveComponent(comp);
+            }
+        );
     }
 
     private void RenderAiInfo()
