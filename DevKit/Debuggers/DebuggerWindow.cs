@@ -94,11 +94,17 @@ public abstract class DebuggerWindow : IDisposable
         );
     }
 
-    protected static void SmallButton(string label, Action onClick)
+    protected static void SmallButton(string label, Action onClick, Vec3? color = null)
     {
-        var clicked = Imgui.SmallButton(label);
-        if (clicked)
-            onClick();
+        WithStyle(
+            () =>
+            {
+                var clicked = Imgui.SmallButton(label);
+                if (clicked)
+                    onClick();
+            },
+            color
+        );
     }
 
     protected static string Dropdown(string label, string[] options, ref int selectedIndex)
@@ -157,6 +163,20 @@ public abstract class DebuggerWindow : IDisposable
         content();
         if (Imgui.IsItemHovered() && !string.IsNullOrEmpty(tooltip))
             Imgui.SetTooltip(tooltip);
+    }
+
+    protected static void WithStyle(Action content, Vec3? color = null)
+    {
+        if (color == null)
+        {
+            content();
+            return;
+        }
+
+        var localColor = color.Value;
+        Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref localColor);
+        content();
+        Imgui.PopStyleColor();
     }
 
     #endregion

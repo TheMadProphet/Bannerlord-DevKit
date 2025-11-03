@@ -323,8 +323,6 @@ public class MobilePartyDebugger : DebuggerWindow
         // Add ID button
         if (_showIdButtons && !string.IsNullOrEmpty(id))
         {
-            var color = new Vec3(1, 1, 1, 0.5f);
-            Imgui.PushStyleColor(Imgui.ColorStyle.Text, ref color);
             Imgui.SameLine(0, 10);
             SmallButton(
                 $"[{id}]##{id}{label}",
@@ -334,9 +332,9 @@ public class MobilePartyDebugger : DebuggerWindow
                     InformationManager.DisplayMessage(
                         new InformationMessage($"Copied '{textToCopy}' to clipboard")
                     );
-                }
+                },
+                GrayStyleColor
             );
-            Imgui.PopStyleColor();
         }
 
         // Add encyclopedia link button
