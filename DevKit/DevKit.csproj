@@ -291,6 +291,7 @@
     <Compile Include="Configuration\DevKitConfigIO.cs" />
     <Compile Include="Debuggers\DebuggerWindow.cs" />
     <Compile Include="Debuggers\Utils\AgentUtils.cs" />
+    <Compile Include="Debuggers\Utils\MobilePartyUtils.cs" />
     <Compile Include="Debuggers\WindowManager.cs" />
     <Compile Include="Debuggers\Windows\AgentDebugger.cs" />
     <Compile Include="Debuggers\Windows\AgentSelector.cs" />

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using DevKit.Debuggers.Utils;
 using HarmonyLib;
 using SandBox.View.Map;
 using TaleWorlds.CampaignSystem;
@@ -230,27 +231,12 @@ public class MobilePartyDebugger : DebuggerWindow
 
     private void PlayerPartyActions()
     {
-        Button(
-            "Heal (Cheat)",
-            () =>
-            {
-                var result = CampaignCheats.HealMainParty(new List<string>());
-                if (!string.IsNullOrEmpty(result))
-                    InformationManager.DisplayMessage(new InformationMessage("Cheat: " + result));
-            }
-        );
+        Button("Heal (Cheat)", MobilePartyUtils.HealMainParty);
         Imgui.SameLine(0, 10);
         Button(
             (CampaignCheats.MainPartyIsAttackable ? "Is attackable" : "Is not attackable")
                 + " (Cheat)",
-            () =>
-            {
-                var result = CampaignCheats.SetMainPartyAttackable(
-                    CampaignCheats.MainPartyIsAttackable ? ["0"] : ["1"]
-                );
-                if (!string.IsNullOrEmpty(result))
-                    InformationManager.DisplayMessage(new InformationMessage("Cheat: " + result));
-            }
+            MobilePartyUtils.ToggleMainPartyAttackable
         );
         Imgui.SameLine(0, 10);
         Button("Debug", () => Debug(MobileParty.MainParty), "Break into debugger (if attached)");
@@ -260,47 +246,19 @@ public class MobilePartyDebugger : DebuggerWindow
     {
         if (MobileParty.MainParty.CurrentSettlement == null)
         {
-            Button("Teleport to party", () => TeleportParty(MobileParty.MainParty, party));
+            Button("Teleport to party", () => MobileParty.MainParty.TeleportTo(party));
             Imgui.SameLine(0, 10);
         }
 
         if (party.CurrentSettlement == null)
         {
-            Button("Teleport to player", () => TeleportParty(party, MobileParty.MainParty));
+            Button("Teleport to player", () => party.TeleportTo(MobileParty.MainParty));
             Imgui.SameLine(0, 10);
-            Button(
-                "Destroy",
-                () =>
-                {
-                    DestroyPartyAction.Apply(null, party);
-                }
-            );
+            Button("Destroy", party.Destroy);
             Imgui.SameLine(0, 10);
         }
 
         Button("Debug", () => Debug(party), "Break into debugger (if attached)");
-    }
-
-    private static void TeleportParty(MobileParty teleporter, MobileParty target)
-    {
-        var intersectionPoint = target.Position2D;
-        if (teleporter.Army != null)
-        {
-            var attachedParties = teleporter.Army.LeaderParty.AttachedParties;
-            foreach (var mobileParty in attachedParties)
-            {
-                mobileParty.Position2D += intersectionPoint - teleporter.Position2D;
-            }
-        }
-        teleporter.Position2D = intersectionPoint;
-        teleporter.Ai.SetMoveModeHold();
-
-        foreach (var mobileParty in MobileParty.All)
-            mobileParty.Party.UpdateVisibilityAndInspected();
-        foreach (var settlement in Settlement.All)
-            settlement.Party.UpdateVisibilityAndInspected();
-
-        MapScreen.Instance.TeleportCameraToMainParty();
     }
 
     private void Debug(MobileParty target)
@@ -327,8 +285,6 @@ public class MobilePartyDebugger : DebuggerWindow
         Imgui.Checkbox(partyLabel, ref isSelected);
         if (isSelected)
             _mobileParty = party;
-        // else if (_mobileParty == party)
-        //     _mobileParty = null;
     }
 
     private static Vec3 UnpackColor(uint color)
