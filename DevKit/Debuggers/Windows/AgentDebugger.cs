@@ -16,7 +16,6 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
 
     private bool _stateIsOpen;
     private bool _flagsIsOpen;
-    private bool _isHighlighted;
 
     protected override void Render()
     {
@@ -140,11 +139,8 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
         // EventControlFlags
         // Formation
         // monster
-        // Agent component list
         // agent scripted stuff
     }
-
-    private static WorldPosition _position;
 
     private void DisplayAgentComponents()
     {
@@ -159,13 +155,7 @@ public class AgentDebugger(Agent agent) : DebuggerWindow
 
                     Imgui.Text($"- {name}");
                     Imgui.SameLine(0, 10);
-                    SmallButton(
-                        $"Remove##{name}",
-                        () =>
-                        {
-                            toRemove.Add(component);
-                        }
-                    );
+                    SmallButton($"Remove##{name}", () => toRemove.Add(component));
                 }
 
                 foreach (var comp in toRemove)
